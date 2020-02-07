@@ -31,6 +31,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
             this.add(userLabel);
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,6 +44,14 @@ public class PreferencesPanel extends javax.swing.JPanel {
 
         FacesPanel = new javax.swing.JPanel();
         FacesLabel = new javax.swing.JLabel();
+        userPanel1 = new javax.swing.JPanel();
+        addUser1 = new javax.swing.JLabel();
+        userPanel2 = new javax.swing.JPanel();
+        addUser2 = new javax.swing.JLabel();
+        userPanel3 = new javax.swing.JPanel();
+        addUser3 = new javax.swing.JLabel();
+        userPanel4 = new javax.swing.JPanel();
+        addUser4 = new javax.swing.JLabel();
         GeneralPanel = new javax.swing.JPanel();
         GeneralLabel = new javax.swing.JLabel();
         TurnOffScreenLabel1 = new javax.swing.JLabel();
@@ -69,21 +78,136 @@ public class PreferencesPanel extends javax.swing.JPanel {
         FacesLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         FacesLabel.setText("Faces");
 
+        userPanel1.setBackground(new java.awt.Color(236, 236, 236));
+        userPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+        userPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userPanel1MouseClicked(evt);
+            }
+        });
+
+        addUser1.setForeground(new java.awt.Color(0, 153, 255));
+        addUser1.setText("Add user");
+
+        javax.swing.GroupLayout userPanel1Layout = new javax.swing.GroupLayout(userPanel1);
+        userPanel1.setLayout(userPanel1Layout);
+        userPanel1Layout.setHorizontalGroup(
+            userPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        userPanel1Layout.setVerticalGroup(
+            userPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(addUser1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+        );
+
+        userPanel2.setBackground(new java.awt.Color(236, 236, 236));
+        userPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+        userPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userPanel2MouseClicked(evt);
+            }
+        });
+
+        addUser2.setForeground(new java.awt.Color(0, 153, 255));
+        addUser2.setText("Add user");
+
+        javax.swing.GroupLayout userPanel2Layout = new javax.swing.GroupLayout(userPanel2);
+        userPanel2.setLayout(userPanel2Layout);
+        userPanel2Layout.setHorizontalGroup(
+            userPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        userPanel2Layout.setVerticalGroup(
+            userPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(addUser2, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+        );
+
+        userPanel3.setBackground(new java.awt.Color(236, 236, 236));
+        userPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+        userPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userPanel3MouseClicked(evt);
+            }
+        });
+
+        addUser3.setForeground(new java.awt.Color(0, 153, 255));
+        addUser3.setText("Add user");
+
+        javax.swing.GroupLayout userPanel3Layout = new javax.swing.GroupLayout(userPanel3);
+        userPanel3.setLayout(userPanel3Layout);
+        userPanel3Layout.setHorizontalGroup(
+            userPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addUser3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        userPanel3Layout.setVerticalGroup(
+            userPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(addUser3, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+        );
+
+        userPanel4.setBackground(new java.awt.Color(236, 236, 236));
+        userPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+        userPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userPanel4MouseClicked(evt);
+            }
+        });
+
+        addUser4.setForeground(new java.awt.Color(0, 153, 255));
+        addUser4.setText("Add user");
+
+        javax.swing.GroupLayout userPanel4Layout = new javax.swing.GroupLayout(userPanel4);
+        userPanel4.setLayout(userPanel4Layout);
+        userPanel4Layout.setHorizontalGroup(
+            userPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addUser4, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        userPanel4Layout.setVerticalGroup(
+            userPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(addUser4, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout FacesPanelLayout = new javax.swing.GroupLayout(FacesPanel);
         FacesPanel.setLayout(FacesPanelLayout);
         FacesPanelLayout.setHorizontalGroup(
             FacesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FacesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(FacesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(FacesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(FacesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FacesPanelLayout.createSequentialGroup()
+                        .addGroup(FacesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(userPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(userPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(userPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(userPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         FacesPanelLayout.setVerticalGroup(
             FacesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(FacesPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FacesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(FacesLabel)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         GeneralPanel.setBackground(new java.awt.Color(236, 236, 236));
@@ -94,7 +218,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
         TurnOffScreenLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         TurnOffScreenLabel1.setText("Turn off screen after");
 
-        TurnOffMinuteSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 30, 5));
+        TurnOffMinuteSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 30, 5));
 
         TurnOffScreenLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         TurnOffScreenLabel2.setText("minutes I am away");
@@ -276,7 +400,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(FacesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addGap(0, 0, 0)
                 .addComponent(GeneralPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AdvancedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,6 +426,26 @@ public class PreferencesPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_ModifierComboActionPerformed
 
+    private void userPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel1MouseClicked
+        AddUserDialog addUser = new AddUserDialog(null, true);
+        addUser.setVisible(true);
+    }//GEN-LAST:event_userPanel1MouseClicked
+
+    private void userPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel2MouseClicked
+        AddUserDialog addUser = new AddUserDialog(null, true);
+        addUser.setVisible(true);
+    }//GEN-LAST:event_userPanel2MouseClicked
+
+    private void userPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel3MouseClicked
+        AddUserDialog addUser = new AddUserDialog(null, true);
+        addUser.setVisible(true);
+    }//GEN-LAST:event_userPanel3MouseClicked
+
+    private void userPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel4MouseClicked
+        AddUserDialog addUser = new AddUserDialog(null, true);
+        addUser.setVisible(true);
+    }//GEN-LAST:event_userPanel4MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AboutLabel;
@@ -324,5 +468,13 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private javax.swing.JLabel TurnOffScreenLabel1;
     private javax.swing.JLabel TurnOffScreenLabel2;
     private javax.swing.JLabel VersionLabel;
+    private javax.swing.JLabel addUser1;
+    private javax.swing.JLabel addUser2;
+    private javax.swing.JLabel addUser3;
+    private javax.swing.JLabel addUser4;
+    private javax.swing.JPanel userPanel1;
+    private javax.swing.JPanel userPanel2;
+    private javax.swing.JPanel userPanel3;
+    private javax.swing.JPanel userPanel4;
     // End of variables declaration//GEN-END:variables
 }

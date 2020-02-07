@@ -31,10 +31,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setBounds(new java.awt.Rectangle(0, 23, 465, 494));
-        setMaximumSize(new java.awt.Dimension(465, 494));
-        setMinimumSize(new java.awt.Dimension(465, 494));
-        setSize(new java.awt.Dimension(465, 494));
+        setBounds(new java.awt.Rectangle(0, 23, 465, 625));
+        setMaximumSize(new java.awt.Dimension(465, 625));
+        setMinimumSize(new java.awt.Dimension(465, 625));
+        setSize(new java.awt.Dimension(465, 625));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

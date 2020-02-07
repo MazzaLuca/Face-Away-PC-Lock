@@ -7,16 +7,16 @@
       <Color blue="ff" green="ff" red="ff" type="rgb"/>
     </Property>
     <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
-      <Rectangle value="[0, 23, 465, 494]"/>
+      <Rectangle value="[0, 23, 465, 625]"/>
     </Property>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[465, 494]"/>
+      <Dimension value="[465, 625]"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[465, 494]"/>
+      <Dimension value="[465, 625]"/>
     </Property>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[465, 494]"/>
+      <Dimension value="[465, 625]"/>
     </Property>
   </Properties>
   <SyntheticProperties>

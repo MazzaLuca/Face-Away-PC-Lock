@@ -20,7 +20,7 @@ class Preferences:
     positionRight = int(window.winfo_screenwidth() / 2 - 500 / 2)
     positionDown = int(window.winfo_screenheight() / 3 - 700 / 2)
 
-    # Positions the window in the center of the page.
+    #Positions the window in the center of the page.
     window.geometry("+{}+{}".format(positionRight, positionDown))
     window.configure(bg='#373737')
 

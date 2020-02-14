@@ -5,18 +5,41 @@
  */
 package preferences;
 
+import java.awt.Color;
+import java.awt.TextField;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.metal.MetalBorders;
+
 /**
  *
  * @author lucamazza
  */
 public class AddUserDialog extends javax.swing.JDialog {
 
+    private String name;
+    
+    private boolean cancelled  = true;
+    
+    private boolean hasRegistered;
+    
     /**
      * Creates new form AddUserDialog
      */
     public AddUserDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public boolean isCancelled(){
+        return this.cancelled;
     }
 
     /**
@@ -36,6 +59,7 @@ public class AddUserDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(236, 236, 236));
+        setResizable(false);
 
         nameLabel.setText("Name");
 
@@ -54,13 +78,13 @@ public class AddUserDialog extends javax.swing.JDialog {
         });
 
         nameTextField.setToolTipText("");
-        nameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameTextFieldActionPerformed(evt);
-            }
-        });
 
         registerFaceButton.setText("Register Face");
+        registerFaceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerFaceButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,7 +93,7 @@ public class AddUserDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(24, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -77,7 +101,7 @@ public class AddUserDialog extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(registerFaceButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveButton)))
@@ -98,19 +122,42 @@ public class AddUserDialog extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+        if(!nameTextField.getText().equals("") && this.hasRegistered){
+            this.name = nameTextField.getText().strip().trim();
+            this.cancelled = false;
+            this.nameTextField.setBorder(new LineBorder(Color.black));
+            this.registerFaceButton.setForeground(Color.black);
+            this.dispose();
+        }else if(nameTextField.getText().equals("") && this.hasRegistered) {
+            this.nameTextField.setBorder(new LineBorder(Color.red));
+            this.cancelled = true;
+        }else if(!nameTextField.getText().equals("") && !this.hasRegistered){
+            this.registerFaceButton.setForeground(Color.red);
+            this.nameTextField.setBorder(new LineBorder(Color.black));
+            this.cancelled = true;
+        }else{
+            this.nameTextField.setBorder(new LineBorder(Color.red));
+            this.registerFaceButton.setForeground(Color.red);
+            this.cancelled = true;
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldActionPerformed
-
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.cancelled = true;
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void registerFaceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerFaceButtonActionPerformed
+        try {
+            Runtime.getRuntime().exec("python3 face.py " + this.name);
+        } catch (IOException ex) {
+            System.err.println("Runtime IOException: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_registerFaceButtonActionPerformed
 
     /**
      * @param args the command line arguments

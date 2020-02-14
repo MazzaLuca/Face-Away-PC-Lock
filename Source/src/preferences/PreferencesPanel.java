@@ -5,8 +5,11 @@
  */
 package preferences;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +21,8 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private String version = "0.1 Beta";
     
     private List<String> userNames;
+    
+    private boolean[] usersOccupied = {false, false, false, false};
     
     /**
      * Creates new form PreferencesPanel
@@ -44,14 +49,18 @@ public class PreferencesPanel extends javax.swing.JPanel {
 
         FacesPanel = new javax.swing.JPanel();
         FacesLabel = new javax.swing.JLabel();
-        userPanel1 = new javax.swing.JPanel();
-        addUser1 = new javax.swing.JLabel();
         userPanel2 = new javax.swing.JPanel();
         addUser2 = new javax.swing.JLabel();
+        deleteLabel2 = new javax.swing.JLabel();
         userPanel3 = new javax.swing.JPanel();
         addUser3 = new javax.swing.JLabel();
+        deleteLabel3 = new javax.swing.JLabel();
         userPanel4 = new javax.swing.JPanel();
         addUser4 = new javax.swing.JLabel();
+        deleteLabel4 = new javax.swing.JLabel();
+        userPanel5 = new javax.swing.JPanel();
+        addUser6 = new javax.swing.JLabel();
+        deleteLabel1 = new javax.swing.JLabel();
         GeneralPanel = new javax.swing.JPanel();
         GeneralLabel = new javax.swing.JLabel();
         TurnOffScreenLabel1 = new javax.swing.JLabel();
@@ -78,31 +87,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
         FacesLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         FacesLabel.setText("Faces");
 
-        userPanel1.setBackground(new java.awt.Color(236, 236, 236));
-        userPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
-        userPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                userPanel1MouseClicked(evt);
-            }
-        });
-
-        addUser1.setForeground(new java.awt.Color(0, 153, 255));
-        addUser1.setText("Add user");
-
-        javax.swing.GroupLayout userPanel1Layout = new javax.swing.GroupLayout(userPanel1);
-        userPanel1.setLayout(userPanel1Layout);
-        userPanel1Layout.setHorizontalGroup(
-            userPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(addUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        userPanel1Layout.setVerticalGroup(
-            userPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(addUser1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-        );
-
         userPanel2.setBackground(new java.awt.Color(236, 236, 236));
         userPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
         userPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -114,6 +98,14 @@ public class PreferencesPanel extends javax.swing.JPanel {
         addUser2.setForeground(new java.awt.Color(0, 153, 255));
         addUser2.setText("Add user");
 
+        deleteLabel2.setForeground(new java.awt.Color(238, 238, 238));
+        deleteLabel2.setText("x");
+        deleteLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteLabel2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout userPanel2Layout = new javax.swing.GroupLayout(userPanel2);
         userPanel2.setLayout(userPanel2Layout);
         userPanel2Layout.setHorizontalGroup(
@@ -121,11 +113,15 @@ public class PreferencesPanel extends javax.swing.JPanel {
             .addGroup(userPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(addUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteLabel2)
+                .addContainerGap())
         );
         userPanel2Layout.setVerticalGroup(
             userPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(addUser2, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+            .addGroup(userPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(addUser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         userPanel3.setBackground(new java.awt.Color(236, 236, 236));
@@ -139,6 +135,14 @@ public class PreferencesPanel extends javax.swing.JPanel {
         addUser3.setForeground(new java.awt.Color(0, 153, 255));
         addUser3.setText("Add user");
 
+        deleteLabel3.setForeground(new java.awt.Color(238, 238, 238));
+        deleteLabel3.setText("x");
+        deleteLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteLabel3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout userPanel3Layout = new javax.swing.GroupLayout(userPanel3);
         userPanel3.setLayout(userPanel3Layout);
         userPanel3Layout.setHorizontalGroup(
@@ -146,11 +150,18 @@ public class PreferencesPanel extends javax.swing.JPanel {
             .addGroup(userPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(addUser3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteLabel3)
+                .addContainerGap())
         );
         userPanel3Layout.setVerticalGroup(
             userPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(addUser3, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+            .addGroup(userPanel3Layout.createSequentialGroup()
+                .addComponent(addUser3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(userPanel3Layout.createSequentialGroup()
+                .addComponent(deleteLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         userPanel4.setBackground(new java.awt.Color(236, 236, 236));
@@ -164,6 +175,14 @@ public class PreferencesPanel extends javax.swing.JPanel {
         addUser4.setForeground(new java.awt.Color(0, 153, 255));
         addUser4.setText("Add user");
 
+        deleteLabel4.setForeground(new java.awt.Color(238, 238, 238));
+        deleteLabel4.setText("x");
+        deleteLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteLabel4MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout userPanel4Layout = new javax.swing.GroupLayout(userPanel4);
         userPanel4.setLayout(userPanel4Layout);
         userPanel4Layout.setHorizontalGroup(
@@ -171,11 +190,53 @@ public class PreferencesPanel extends javax.swing.JPanel {
             .addGroup(userPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(addUser4, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteLabel4)
+                .addContainerGap())
         );
         userPanel4Layout.setVerticalGroup(
             userPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(addUser4, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+            .addGroup(userPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(addUser4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        userPanel5.setBackground(new java.awt.Color(236, 236, 236));
+        userPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+        userPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userPanel5MouseClicked(evt);
+            }
+        });
+
+        addUser6.setForeground(new java.awt.Color(0, 153, 255));
+        addUser6.setText("Add user");
+
+        deleteLabel1.setForeground(new java.awt.Color(238, 238, 238));
+        deleteLabel1.setText("x");
+        deleteLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteLabel1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout userPanel5Layout = new javax.swing.GroupLayout(userPanel5);
+        userPanel5.setLayout(userPanel5Layout);
+        userPanel5Layout.setHorizontalGroup(
+            userPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addUser6, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteLabel1)
+                .addContainerGap())
+        );
+        userPanel5Layout.setVerticalGroup(
+            userPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userPanel5Layout.createSequentialGroup()
+                .addComponent(addUser6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(deleteLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout FacesPanelLayout = new javax.swing.GroupLayout(FacesPanel);
@@ -185,12 +246,12 @@ public class PreferencesPanel extends javax.swing.JPanel {
             .addGroup(FacesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(FacesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(FacesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                    .addComponent(FacesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FacesPanelLayout.createSequentialGroup()
                         .addGroup(FacesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(userPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(userPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(userPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(userPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(userPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
@@ -200,7 +261,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(FacesLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(userPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(userPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -324,7 +385,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
             AdvancedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdvancedPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(AdvancedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
+                .addComponent(AdvancedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE))
             .addGroup(AdvancedPanelLayout.createSequentialGroup()
                 .addComponent(NotifySomeoneSeenCheck)
                 .addGap(6, 6, 6))
@@ -367,8 +428,8 @@ public class PreferencesPanel extends javax.swing.JPanel {
             .addGroup(AboutPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AboutLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
-                    .addComponent(FaceLockLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+                    .addComponent(AboutLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                    .addComponent(FaceLockLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
                     .addComponent(VersionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CopyrightLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -426,25 +487,118 @@ public class PreferencesPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_ModifierComboActionPerformed
 
-    private void userPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel1MouseClicked
-        AddUserDialog addUser = new AddUserDialog(null, true);
-        addUser.setVisible(true);
-    }//GEN-LAST:event_userPanel1MouseClicked
-
     private void userPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel2MouseClicked
-        AddUserDialog addUser = new AddUserDialog(null, true);
-        addUser.setVisible(true);
+        if(!this.usersOccupied[1]){
+            AddUserDialog addUser = new AddUserDialog(null, true);
+            addUser.setVisible(true);
+            if(!addUser.isCancelled()){
+                this.addUser2.setText(addUser.getName());
+                this.deleteLabel2.setForeground(new Color(0,153,255));
+                repaint();
+                this.usersOccupied[1] = true;
+            }
+        }
     }//GEN-LAST:event_userPanel2MouseClicked
 
     private void userPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel3MouseClicked
-        AddUserDialog addUser = new AddUserDialog(null, true);
-        addUser.setVisible(true);
+        if(!this.usersOccupied[2]){
+            AddUserDialog addUser = new AddUserDialog(null, true);
+            addUser.setVisible(true);
+            if(!addUser.isCancelled()){
+                this.addUser3.setText(addUser.getName());
+                this.deleteLabel3.setForeground(new Color(0,153,255));
+                repaint();
+                this.usersOccupied[2] = true;
+            }
+        }
     }//GEN-LAST:event_userPanel3MouseClicked
 
     private void userPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel4MouseClicked
-        AddUserDialog addUser = new AddUserDialog(null, true);
-        addUser.setVisible(true);
+        if(!this.usersOccupied[3]){
+            AddUserDialog addUser = new AddUserDialog(null, true);
+            addUser.setVisible(true);
+            if(!addUser.isCancelled()){
+                this.addUser4.setText(addUser.getName());
+                this.deleteLabel4.setForeground(new Color(0,153,255));
+                repaint();
+                this.usersOccupied[3] = true;
+            }
+        }
     }//GEN-LAST:event_userPanel4MouseClicked
+
+    private void userPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel5MouseClicked
+        if(!this.usersOccupied[0]){
+            AddUserDialog addUser = new AddUserDialog(null, true);
+            addUser.setVisible(true);
+            if(!addUser.isCancelled()){
+                this.addUser6.setText(addUser.getName());
+                this.deleteLabel1.setForeground(new Color(0,153,255));
+                
+                repaint();
+                this.usersOccupied[0] = true;
+            } 
+        }
+    }//GEN-LAST:event_userPanel5MouseClicked
+
+    private void deleteLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel1MouseClicked
+        if(this.usersOccupied[0]){
+            Object[] options = { "Ok", "Cancel" };
+            int response = JOptionPane.showOptionDialog(null,
+                "Are you sure you want to delete this user", "Warning",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[0]);
+            if(JOptionPane.YES_OPTION == response){
+                this.addUser6.setText("Add user");
+                this.deleteLabel1.setForeground(new Color(238,238,238));
+                this.usersOccupied[0] = false;
+            }
+        }
+    }//GEN-LAST:event_deleteLabel1MouseClicked
+
+    private void deleteLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel4MouseClicked
+        if(this.usersOccupied[3]){
+            Object[] options = { "Ok", "Cancel" };
+            int response = JOptionPane.showOptionDialog(null,
+                "Are you sure you want to delete this user", "Warning",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[0]);
+            if(JOptionPane.YES_OPTION == response){
+                this.addUser4.setText("Add user");
+                this.deleteLabel4.setForeground(new Color(238,238,238));
+                this.usersOccupied[3] = false;
+            }
+        }
+    }//GEN-LAST:event_deleteLabel4MouseClicked
+
+    private void deleteLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel2MouseClicked
+        if(this.usersOccupied[1]){
+            Object[] options = { "Ok", "Cancel" };
+            int response = JOptionPane.showOptionDialog(null,
+                "Are you sure you want to delete this user", "Warning",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[0]);
+            if(JOptionPane.YES_OPTION == response){
+                this.addUser2.setText("Add user");
+                this.deleteLabel2.setForeground(new Color(238,238,238));
+                this.usersOccupied[1] = false;
+            }
+        }
+    }//GEN-LAST:event_deleteLabel2MouseClicked
+
+    private void deleteLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel3MouseClicked
+        if(this.usersOccupied[2]){
+            Object[] options = { "Ok", "Cancel" };
+            int response = JOptionPane.showOptionDialog(null,
+                "Are you sure you want to delete this user", "Warning",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[0]);
+            if(JOptionPane.YES_OPTION == response){
+                this.addUser3.setText("Add user");
+                this.deleteLabel3.setForeground(new Color(238,238,238));
+                this.usersOccupied[2] = false;
+            }
+        }
+    }//GEN-LAST:event_deleteLabel3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -468,13 +622,17 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private javax.swing.JLabel TurnOffScreenLabel1;
     private javax.swing.JLabel TurnOffScreenLabel2;
     private javax.swing.JLabel VersionLabel;
-    private javax.swing.JLabel addUser1;
     private javax.swing.JLabel addUser2;
     private javax.swing.JLabel addUser3;
     private javax.swing.JLabel addUser4;
-    private javax.swing.JPanel userPanel1;
+    private javax.swing.JLabel addUser6;
+    private javax.swing.JLabel deleteLabel1;
+    private javax.swing.JLabel deleteLabel2;
+    private javax.swing.JLabel deleteLabel3;
+    private javax.swing.JLabel deleteLabel4;
     private javax.swing.JPanel userPanel2;
     private javax.swing.JPanel userPanel3;
     private javax.swing.JPanel userPanel4;
+    private javax.swing.JPanel userPanel5;
     // End of variables declaration//GEN-END:variables
 }

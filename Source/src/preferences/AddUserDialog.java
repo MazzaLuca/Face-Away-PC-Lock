@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package preferences;
 
 import java.awt.Color;
-import java.awt.TextField;
+import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.metal.MetalBorders;
 
 /**
  *
@@ -20,6 +11,8 @@ import javax.swing.plaf.metal.MetalBorders;
  */
 public class AddUserDialog extends javax.swing.JDialog {
 
+    private String dir;
+    
     private String name;
     
     private boolean cancelled  = true;
@@ -29,8 +22,9 @@ public class AddUserDialog extends javax.swing.JDialog {
     /**
      * Creates new form AddUserDialog
      */
-    public AddUserDialog(java.awt.Frame parent, boolean modal) {
+    public AddUserDialog(java.awt.Frame parent, boolean modal, String dir) {
         super(parent, modal);
+        this.dir = dir;
         initComponents();
     }
     
@@ -126,16 +120,28 @@ public class AddUserDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if(!nameTextField.getText().equals("") && this.hasRegistered){
+        if(!nameTextField.getText().equals("") /*&& this.hasRegistered*/){
             this.name = nameTextField.getText().strip().trim();
             this.cancelled = false;
             this.nameTextField.setBorder(new LineBorder(Color.black));
             this.registerFaceButton.setForeground(Color.black);
+            File dir = new File(this.dir + name);
+            // if the directory does not exist, create it
+            if (!dir.exists()) {
+                boolean result = false;
+                try{
+                    dir.mkdir();
+                    result = true;
+                } 
+                catch(SecurityException se){
+                    //handle it
+                }
+            }
             this.dispose();
-        }else if(nameTextField.getText().equals("") && this.hasRegistered) {
+        }else if(nameTextField.getText().equals("") /*&& this.hasRegistered*/) {
             this.nameTextField.setBorder(new LineBorder(Color.red));
             this.cancelled = true;
-        }else if(!nameTextField.getText().equals("") && !this.hasRegistered){
+        }else if(!nameTextField.getText().equals("") /*&& !this.hasRegistered*/){
             this.registerFaceButton.setForeground(Color.red);
             this.nameTextField.setBorder(new LineBorder(Color.black));
             this.cancelled = true;
@@ -189,7 +195,7 @@ public class AddUserDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddUserDialog dialog = new AddUserDialog(new javax.swing.JFrame(), true);
+                AddUserDialog dialog = new AddUserDialog(new javax.swing.JFrame(), true, "/Users/lucamazza/Desktop/");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

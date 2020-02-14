@@ -1,14 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package preferences;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JDialog;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.util.Arrays;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,28 +17,105 @@ import javax.swing.JOptionPane;
  * @author lucamazza
  */
 public class PreferencesPanel extends javax.swing.JPanel {
-
+    
+    //String[] users = new String[4];
+    String[] users = {"", "", "", ""};
+    
+    private String dir = "/Users/lucamazza/Desktop/Users/";
     
     private String version = "0.1 Beta";
-    
-    private List<String> userNames;
-    
-    private boolean[] usersOccupied = {false, false, false, false};
     
     /**
      * Creates new form PreferencesPanel
      */
     public PreferencesPanel() {
-        this.userNames = new ArrayList<>();
         initComponents();
-        for (String userName : userNames) {
-            javax.swing.JLabel userLabel = new javax.swing.JLabel(userName);
-            userLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 20));
-            this.add(userLabel);
+        deSerialize(new File("/Users/lucamazza/Desktop/Users/Users"));
+    }
+    
+    public void deleteDir(File file) {
+        File[] contents = file.listFiles();
+        if (contents != null) {
+            for (File f : contents) {
+                if (!Files.isSymbolicLink(f.toPath())) {
+                        deleteDir(f);
+                }
+            }
+        }
+        file.delete();
+    }
+    
+    public void deSerialize(File handle) {
+        String path = handle.toString();
+        try {
+            FileInputStream fileIn = new FileInputStream(path);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            this.users = Arrays.copyOf((String[])in.readObject(), 4);
+            in.close();
+            fileIn.close();
+            if(!users[0].equals("")){
+                this.addUser6.setText(users[0]);
+                this.deleteLabel1.setForeground(new Color(0,153,255));
+            }else{
+                this.addUser6.setText("Add user");
+                this.deleteLabel1.setForeground(new Color(238,238,238));
+            }
+            if(!users[1].equals("")){
+                this.addUser2.setText(users[1]);
+                this.deleteLabel2.setForeground(new Color(0,153,255));
+            }else{
+                this.addUser2.setText("Add user");
+                this.deleteLabel2.setForeground(new Color(238,238,238));
+            }
+            
+            if(!users[2].equals("")){
+                this.addUser3.setText(users[2]);
+                this.deleteLabel3.setForeground(new Color(0,153,255));
+            }else{
+                this.addUser3.setText("Add user");
+                this.deleteLabel3.setForeground(new Color(238,238,238));
+            }
+            if(!users[3].equals("")){
+                this.addUser4.setText(users[3]);
+                this.deleteLabel4.setForeground(new Color(0,153,255));
+            }else{
+                this.addUser4.setText("Add user");
+                this.deleteLabel4.setForeground(new Color(238,238,238));
+            }
+            validate();
+        } catch (IOException | ClassNotFoundException i) {
+            JOptionPane jop = new JOptionPane();
+            jop.showOptionDialog(
+                    null,
+                    "Cannot open file " + handle ,
+                    "Error opening file",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE,
+                    null, null, null);
         }
     }
     
-
+    public void serialize(File handle) {
+        String path = handle.toString();
+        try {
+            FileOutputStream fileOut = new FileOutputStream(path);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this.users);
+            out.close();
+            fileOut.close();
+            System.out.println(this.users[0]);
+        } catch (IOException i) {
+            JOptionPane jop = new JOptionPane();
+            jop.showOptionDialog(
+                    null,
+                    "Cannot write file " + handle,
+                    "Error opening file",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE,
+                    null, null, null);
+        }
+        validate();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -488,114 +566,118 @@ public class PreferencesPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_ModifierComboActionPerformed
 
     private void userPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel2MouseClicked
-        if(!this.usersOccupied[1]){
-            AddUserDialog addUser = new AddUserDialog(null, true);
+        if(this.users[1].equals("")){
+            AddUserDialog addUser = new AddUserDialog(/*(JFrame)this.getParent()*/null ,true, this.dir);
             addUser.setVisible(true);
             if(!addUser.isCancelled()){
-                this.addUser2.setText(addUser.getName());
-                this.deleteLabel2.setForeground(new Color(0,153,255));
-                repaint();
-                this.usersOccupied[1] = true;
+                users[1] = addUser.getName().trim();
+                serialize(new File(dir + "Users"));
+                deSerialize(new File(dir + "Users"));
             }
         }
     }//GEN-LAST:event_userPanel2MouseClicked
 
     private void userPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel3MouseClicked
-        if(!this.usersOccupied[2]){
-            AddUserDialog addUser = new AddUserDialog(null, true);
+        if(this.users[2].equals("")){
+            AddUserDialog addUser = new AddUserDialog(/*(JFrame)this.getParent()*/null, true, this.dir);
             addUser.setVisible(true);
             if(!addUser.isCancelled()){
-                this.addUser3.setText(addUser.getName());
-                this.deleteLabel3.setForeground(new Color(0,153,255));
-                repaint();
-                this.usersOccupied[2] = true;
+                users[2] = addUser.getName().trim();
+                serialize(new File(dir + "Users"));
+                deSerialize(new File(dir + "Users"));
             }
         }
     }//GEN-LAST:event_userPanel3MouseClicked
 
     private void userPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel4MouseClicked
-        if(!this.usersOccupied[3]){
-            AddUserDialog addUser = new AddUserDialog(null, true);
+        if(this.users[3].equals("")){
+            AddUserDialog addUser = new AddUserDialog(/*(JFrame)this.getParent()*/null, true, this.dir);
             addUser.setVisible(true);
             if(!addUser.isCancelled()){
-                this.addUser4.setText(addUser.getName());
-                this.deleteLabel4.setForeground(new Color(0,153,255));
-                repaint();
-                this.usersOccupied[3] = true;
+                users[3] = addUser.getName().trim();
+                serialize(new File(dir + "Users"));
+                deSerialize(new File(dir + "Users"));
             }
         }
     }//GEN-LAST:event_userPanel4MouseClicked
 
     private void userPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel5MouseClicked
-        if(!this.usersOccupied[0]){
-            AddUserDialog addUser = new AddUserDialog(null, true);
+        if(this.users[0].equals("")){
+            AddUserDialog addUser = new AddUserDialog(/*(JFrame)this.getParent()*/null, true, this.dir);
             addUser.setVisible(true);
             if(!addUser.isCancelled()){
-                this.addUser6.setText(addUser.getName());
-                this.deleteLabel1.setForeground(new Color(0,153,255));
-                
-                repaint();
-                this.usersOccupied[0] = true;
+                users[0] = addUser.getName().trim();
+                serialize(new File(dir + "Users"));
+                deSerialize(new File(dir + "Users"));
             } 
         }
     }//GEN-LAST:event_userPanel5MouseClicked
 
     private void deleteLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel1MouseClicked
-        if(this.usersOccupied[0]){
+        if(!this.users[0].equals("")){
             Object[] options = { "Ok", "Cancel" };
             int response = JOptionPane.showOptionDialog(null,
                 "Are you sure you want to delete this user", "Warning",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
                 null, options, options[0]);
             if(JOptionPane.YES_OPTION == response){
-                this.addUser6.setText("Add user");
-                this.deleteLabel1.setForeground(new Color(238,238,238));
-                this.usersOccupied[0] = false;
+                String fileDir = this.dir + addUser6.getText();
+                deleteDir(new File(fileDir));
+                this.users[0] = "";
+                serialize(new File(dir + "Users"));
+                deSerialize(new File(dir + "Users"));
+                
             }
         }
     }//GEN-LAST:event_deleteLabel1MouseClicked
 
     private void deleteLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel4MouseClicked
-        if(this.usersOccupied[3]){
+        if(!this.users[3].equals("")){
             Object[] options = { "Ok", "Cancel" };
             int response = JOptionPane.showOptionDialog(null,
                 "Are you sure you want to delete this user", "Warning",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
                 null, options, options[0]);
             if(JOptionPane.YES_OPTION == response){
-                this.addUser4.setText("Add user");
-                this.deleteLabel4.setForeground(new Color(238,238,238));
-                this.usersOccupied[3] = false;
+                String fileDir = this.dir + addUser4.getText();
+                deleteDir(new File(fileDir));
+                this.users[3] = "";
+                serialize(new File(dir + "Users"));
+                deSerialize(new File(dir + "Users"));
             }
         }
     }//GEN-LAST:event_deleteLabel4MouseClicked
 
     private void deleteLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel2MouseClicked
-        if(this.usersOccupied[1]){
+        if(!this.users[1].equals("")){
             Object[] options = { "Ok", "Cancel" };
             int response = JOptionPane.showOptionDialog(null,
                 "Are you sure you want to delete this user", "Warning",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
                 null, options, options[0]);
             if(JOptionPane.YES_OPTION == response){
-                this.addUser2.setText("Add user");
-                this.deleteLabel2.setForeground(new Color(238,238,238));
-                this.usersOccupied[1] = false;
+                String fileDir = this.dir + addUser2.getText();
+                deleteDir(new File(fileDir));
+                this.users[1] = "";
+                serialize(new File(dir + "Users"));
+                deSerialize(new File(dir + "Users"));
             }
         }
     }//GEN-LAST:event_deleteLabel2MouseClicked
 
     private void deleteLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel3MouseClicked
-        if(this.usersOccupied[2]){
+        if(!this.users[2].equals("")){
             Object[] options = { "Ok", "Cancel" };
             int response = JOptionPane.showOptionDialog(null,
                 "Are you sure you want to delete this user", "Warning",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
                 null, options, options[0]);
             if(JOptionPane.YES_OPTION == response){
-                this.addUser3.setText("Add user");
-                this.deleteLabel3.setForeground(new Color(238,238,238));
-                this.usersOccupied[2] = false;
+                String fileDir = this.dir + addUser3.getText();
+                deleteDir(new File(fileDir));
+                this.users[2] = "";
+                serialize(new File(dir + "Users"));
+                deSerialize(new File(dir + "Users"));
             }
         }
     }//GEN-LAST:event_deleteLabel3MouseClicked

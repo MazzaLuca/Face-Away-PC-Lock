@@ -9,7 +9,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -393,13 +392,18 @@ public class PreferencesPanel extends javax.swing.JPanel {
             }
         });
 
+        ShortcutLetter.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ShortcutLetter.setText("L");
         ShortcutLetter.setToolTipText("");
+        ShortcutLetter.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        ShortcutLetter.setDragEnabled(false);
+        ShortcutLetter.setPreferredSize(new java.awt.Dimension(11, 26));
 
         javax.swing.GroupLayout GeneralPanelLayout = new javax.swing.GroupLayout(GeneralPanel);
         GeneralPanel.setLayout(GeneralPanelLayout);
         GeneralPanelLayout.setHorizontalGroup(
             GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 490, Short.MAX_VALUE)
             .addGroup(GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(GeneralPanelLayout.createSequentialGroup()
                     .addGap(3, 3, 3)
@@ -407,10 +411,10 @@ public class PreferencesPanel extends javax.swing.JPanel {
                         .addComponent(GeneralLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                         .addGroup(GeneralPanelLayout.createSequentialGroup()
                             .addComponent(ShortCutCheck)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ModifierCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
+                            .addComponent(ModifierCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(ShortcutLetter, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ShortcutLetter, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(GeneralPanelLayout.createSequentialGroup()
                             .addGroup(GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(GeneralPanelLayout.createSequentialGroup()

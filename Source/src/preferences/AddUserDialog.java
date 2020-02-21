@@ -3,6 +3,8 @@ package preferences;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.LineBorder;
 
 /**
@@ -19,12 +21,15 @@ public class AddUserDialog extends javax.swing.JDialog {
     
     private boolean hasRegistered;
     
+    private String filename;
+    
     /**
      * Creates new form AddUserDialog
      */
     public AddUserDialog(java.awt.Frame parent, boolean modal, String dir) {
         super(parent, modal);
         this.dir = dir;
+        this.filename = "/Users/lucamazza/Documents/GitHub/Face-Away-PC-Lock/Source/facelock/faceCheck.py";
         initComponents();
     }
     
@@ -158,10 +163,19 @@ public class AddUserDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void registerFaceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerFaceButtonActionPerformed
-        try {
-            Runtime.getRuntime().exec("python3 face.py " + this.name);
-        } catch (IOException ex) {
-            System.err.println("Runtime IOException: " + ex.getMessage());
+        String os = System.getProperty("os.name").toLowerCase();
+        if(os.indexOf("mac") >= 0){
+            try {
+                System.out.println("mac");
+                //Process p = Runtime.getRuntime().exec("open -a /System/Applications/Utilities/Terminal.app");
+                Process p = Runtime.getRuntime().exec("open -a /System/Applications/Utilities/Terminal.app");
+            } catch (IOException ex) {
+                System.out.println("Errore D:");
+            }
+        }else if(os.indexOf("win") >= 0){
+            System.out.println("win");
+        }else if(os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") >= 0){
+            System.out.println("nix");
         }
     }//GEN-LAST:event_registerFaceButtonActionPerformed
 

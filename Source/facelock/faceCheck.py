@@ -6,6 +6,7 @@ import os
 import sys
 import shutil
 import psutil
+from sys import platform
 
 # Metodo che ritorna la lista di utenti che hanno fatto le foto per poi
 # essere riconosciuti. Per sapere quest'informazione l'algoritmo si dirige 
@@ -100,8 +101,11 @@ def TakePhoto():
     shutil.move('.\\' + (str(files[0]) + '.jpg'), 'Dataset\\' + user + '\\' +  str(files[0]) + '.jpg')
 
 def getFrame():
-    #video_capture = cv2.VideoCapture(0)
-    video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
+    if platform == "darwin":
+        video_capture = cv2.VideoCapture(0)
+    else:
+        video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
     ret, frame = video_capture.read()
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
     rgb_small_frame = small_frame[:, :, ::-1]
@@ -124,21 +128,20 @@ known_face_names = getFinalUsers(users)
 timer = 5
 while True:
     if checkIfProcessRunning("Camera"):
-        print("Fotocamera attiva")
+        print("Camera is active in another process")
     else:
         face = getFaces(getFrame(), known_face_names, known_face_encodings) 
         if(face == -1):
             print(timer)
             timer = timer - 1
-            if timer == 0:
-                print("Volto non riconosciuto per troppo tempo")
+            if timer == -1:
+                print("Face not recognised for too long")
                 break
         else:
-            print("ciao " + face)
+            print("Hi " + face)
             timer = 5
 
-
-    sleep(1)
+    sleep(0.5)
 
 
         

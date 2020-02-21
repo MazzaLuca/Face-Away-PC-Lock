@@ -4,6 +4,7 @@ import numpy as np
 from time import sleep
 import os,sys
 import shutil
+import warnings
 
 # Metodo che ritorna la lista di utenti che hanno fatto le foto per poi
 # essere riconosciuti. Per sapere quest'informazione l'algoritmo si dirige 
@@ -52,7 +53,7 @@ def getFaces(frame,names,encodings):
     face_locations = face_recognition.face_locations(frame)
     face_encodings = face_recognition.face_encodings(frame, face_locations)
 
-    face_names = -1
+    face_name = -1
     for face_encoding in face_encodings:
         matches = face_recognition.compare_faces(encodings, face_encoding)
 
@@ -63,7 +64,7 @@ def getFaces(frame,names,encodings):
             break
     return face_name
 
-def getPicture():
+def TakePhoto():
     user = ""
     files = []
     isempty = True
@@ -74,13 +75,12 @@ def getPicture():
     else:
         user = "DEFAULT"
 
-    if (not os.path.isdir("IMAGES/" + user + "/")):
-        os.mkdir("IMAGES/" + user + "/")
+    if (not os.path.isdir("Dataset/" + user + "/")):
+        os.mkdir("Dataset/" + user + "/")
 
-    for file in os.listdir('IMAGES/' + user + "/"):
+    for file in os.listdir('Dataset/' + user + "/"):
         files.insert(0, file.strip(".jpg"))
         isempty = False
-
     if isempty:
         files.insert(0, "0")
     else:
@@ -96,11 +96,34 @@ def getPicture():
     camera.release()
     cv2.destroyAllWindows()
 
-    shutil.move('.\\' + (str(files[0]) + '.jpg'), 'IMAGES\\' + user + '\\' +  str(files[0]) + '.jpg')
+    shutil.move('.\\' + (str(files[0]) + '.jpg'), 'Dataset\\' + user + '\\' +  str(files[0]) + '.jpg')
+
+def getFrame():
+    #video_capture = cv2.VideoCapture(0)
+    video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    ret, frame = video_capture.read()
+    small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+    rgb_small_frame = small_frame[:, :, ::-1]
+    cv2.destroyAllWindows()
+    return rgb_small_frame
 
 users = getUsers()
 known_face_encodings = getEncodings(users)
 known_face_names = getFinalUsers(users)
+timer = 5
+while True:
+    face = getFaces(getFrame(), known_face_names, known_face_encodings) 
+    if(face == -1):
+        sleep(1)
+        print(timer)
+        timer = timer - 1
+        if timer == 0:
+            print("Volto non riconosciuto per troppo tempo")
+            break
+    else:
+        print("ciao " + face)
+        timer = 5
+    
 
 
 

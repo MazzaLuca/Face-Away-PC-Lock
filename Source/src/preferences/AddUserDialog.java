@@ -3,8 +3,6 @@ package preferences;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.border.LineBorder;
 
 /**
@@ -14,30 +12,30 @@ import javax.swing.border.LineBorder;
 public class AddUserDialog extends javax.swing.JDialog {
 
     private String dir;
-    
+
     private String name;
-    
-    private boolean cancelled  = true;
-    
+
+    private boolean cancelled = true;
+
     private boolean hasRegistered;
-    
+
     private String filename;
-    
+
     /**
      * Creates new form AddUserDialog
      */
     public AddUserDialog(java.awt.Frame parent, boolean modal, String dir) {
         super(parent, modal);
         this.dir = dir;
-        this.filename = "/Users/lucamazza/Documents/GitHub/Face-Away-PC-Lock/Source/facelock/faceCheck.py";
+        this.filename = "faceCheck.py";
         initComponents();
     }
-    
-    public String getName(){
+
+    public String getName() {
         return this.name;
     }
-    
-    public boolean isCancelled(){
+
+    public boolean isCancelled() {
         return this.cancelled;
     }
 
@@ -125,7 +123,7 @@ public class AddUserDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if(!nameTextField.getText().equals("") /*&& this.hasRegistered*/){
+        if (!nameTextField.getText().equals("") /*&& this.hasRegistered*/) {
             this.name = nameTextField.getText().strip().trim();
             this.cancelled = false;
             this.nameTextField.setBorder(new LineBorder(Color.black));
@@ -134,23 +132,22 @@ public class AddUserDialog extends javax.swing.JDialog {
             // if the directory does not exist, create it
             if (!dir.exists()) {
                 boolean result = false;
-                try{
+                try {
                     dir.mkdir();
                     result = true;
-                } 
-                catch(SecurityException se){
+                } catch (SecurityException se) {
                     //handle it
                 }
             }
             this.dispose();
-        }else if(nameTextField.getText().equals("") /*&& this.hasRegistered*/) {
+        } else if (nameTextField.getText().equals("") /*&& this.hasRegistered*/) {
             this.nameTextField.setBorder(new LineBorder(Color.red));
             this.cancelled = true;
-        }else if(!nameTextField.getText().equals("") /*&& !this.hasRegistered*/){
+        } else if (!nameTextField.getText().equals("") /*&& !this.hasRegistered*/) {
             this.registerFaceButton.setForeground(Color.red);
             this.nameTextField.setBorder(new LineBorder(Color.black));
             this.cancelled = true;
-        }else{
+        } else {
             this.nameTextField.setBorder(new LineBorder(Color.red));
             this.registerFaceButton.setForeground(Color.red);
             this.cancelled = true;
@@ -164,17 +161,16 @@ public class AddUserDialog extends javax.swing.JDialog {
 
     private void registerFaceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerFaceButtonActionPerformed
         String os = System.getProperty("os.name").toLowerCase();
-        if(os.indexOf("mac") >= 0){
+        if (os.indexOf("mac") >= 0) {
             try {
-                System.out.println("mac");
-                //Process p = Runtime.getRuntime().exec("open -a /System/Applications/Utilities/Terminal.app");
-                Process p = Runtime.getRuntime().exec("open -a /System/Applications/Utilities/Terminal.app");
+                String[] cmd = {"python3", "/Users/lucamazza/Desktop/Users/Face.py","Luca"};
+                Runtime.getRuntime().exec(cmd);
             } catch (IOException ex) {
-                System.out.println("Errore D:");
+                System.out.println("Errore D:" + ex.getMessage());
             }
-        }else if(os.indexOf("win") >= 0){
+        } else if (os.indexOf("win") >= 0) {
             System.out.println("win");
-        }else if(os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") >= 0){
+        } else if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") >= 0) {
             System.out.println("nix");
         }
     }//GEN-LAST:event_registerFaceButtonActionPerformed

@@ -2,9 +2,10 @@ import face_recognition
 import cv2
 import numpy as np
 from time import sleep
-import os,sys
+import os
+import sys
 import shutil
-import warnings
+import psutil
 
 # Metodo che ritorna la lista di utenti che hanno fatto le foto per poi
 # essere riconosciuti. Per sapere quest'informazione l'algoritmo si dirige 
@@ -107,23 +108,40 @@ def getFrame():
     cv2.destroyAllWindows()
     return rgb_small_frame
 
+
+def checkIfProcessRunning(processName):
+    for proc in psutil.process_iter():
+        try:
+            if processName.lower() in proc.name().lower():
+                return True
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+    return False;
+
 users = getUsers()
 known_face_encodings = getEncodings(users)
 known_face_names = getFinalUsers(users)
 timer = 5
 while True:
-    face = getFaces(getFrame(), known_face_names, known_face_encodings) 
-    if(face == -1):
-        sleep(1)
-        print(timer)
-        timer = timer - 1
-        if timer == 0:
-            print("Volto non riconosciuto per troppo tempo")
-            break
+    if checkIfProcessRunning("Camera"):
+        print("Fotocamera attiva")
     else:
-        print("ciao " + face)
-        timer = 5
-    
+        face = getFaces(getFrame(), known_face_names, known_face_encodings) 
+        if(face == -1):
+            print(timer)
+            timer = timer - 1
+            if timer == 0:
+                print("Volto non riconosciuto per troppo tempo")
+                break
+        else:
+            print("ciao " + face)
+            timer = 5
+
+
+    sleep(1)
+
+
+        
 
 
 

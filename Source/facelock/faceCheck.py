@@ -194,12 +194,3 @@ while timer >= 0:
     if(now - start < 1000):
         sleep(float(1000 - (now - start))/ 1000.0)
 lockScreen(system)
-
-
-
-        
-
-
-
-
-

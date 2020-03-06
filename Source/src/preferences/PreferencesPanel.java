@@ -20,7 +20,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
     //String[] users = new String[4];
     String[] users = {"", "", "", ""};
     
-    private String dir = "/Users/lucamazza/Desktop/Users/";
+    private String dir = "./Dataset/";
     
     private String version = "0.1 Beta";
     
@@ -29,7 +29,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
      */
     public PreferencesPanel() {
         initComponents();
-        deSerialize(new File("/Users/lucamazza/Desktop/Users/Users"));
+        deSerialize(new File("./Dataset/Users"));
     }
     
     public void deleteDir(File file) {
@@ -357,6 +357,9 @@ public class PreferencesPanel extends javax.swing.JPanel {
         TurnOffScreenLabel1.setText("Turn off screen after");
 
         TurnOffMinuteSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 30, 5));
+        TurnOffMinuteSpinner.setFocusable(false);
+        TurnOffMinuteSpinner.setOpaque(true);
+        TurnOffMinuteSpinner.setRequestFocusEnabled(false);
 
         TurnOffScreenLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         TurnOffScreenLabel2.setText("minutes I am away");

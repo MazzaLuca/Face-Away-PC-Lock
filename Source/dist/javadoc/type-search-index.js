@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"preferences","l":"AddUserDialog"},{"l":"All Classes","url":"allclasses-index.html"},{"p":"preferences","l":"PreferencesFrame"},{"p":"preferences","l":"PreferencesPanel"}]

@@ -1,8 +1,13 @@
 package preferences;
 
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.LineBorder;
 
 /**
@@ -75,6 +80,11 @@ public class AddUserDialog extends javax.swing.JDialog {
         });
 
         nameTextField.setToolTipText("");
+        nameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nameTextFieldKeyPressed(evt);
+            }
+        });
 
         registerFaceButton.setText("Register Face");
         registerFaceButton.addActionListener(new java.awt.event.ActionListener() {
@@ -161,19 +171,38 @@ public class AddUserDialog extends javax.swing.JDialog {
 
     private void registerFaceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerFaceButtonActionPerformed
         String os = System.getProperty("os.name").toLowerCase();
+
         if (os.indexOf("mac") >= 0) {
             try {
-                String[] cmd = {"python3", "/Users/lucamazza/Desktop/Users/Face.py","Luca"};
-                Runtime.getRuntime().exec(cmd);
-            } catch (IOException ex) {
-                System.out.println("Errore D:" + ex.getMessage());
+                String[] command = {"/usr/local/bin/python3", "image.py", this.nameTextField.getText().trim()};
+                ProcessBuilder processBuilder = new ProcessBuilder(command);
+                processBuilder.directory(new File("./"));
+                Process process = processBuilder.start();
+                
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+                
+                String line;
+                while((line = reader.readLine()) != null){
+                    System.out.println(line);
+                }
+                
+                int exitCode = process.waitFor();
+                System.err.println("Exited with error code: " + exitCode);
+            } catch (IOException | InterruptedException ex) {
+                Logger.getLogger(AddUserDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (os.indexOf("win") >= 0) {
-            System.out.println("win");
+            System.out.println("Windows");
         } else if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") >= 0) {
-            System.out.println("nix");
+            System.out.println("Linux");
         }
     }//GEN-LAST:event_registerFaceButtonActionPerformed
+
+    private void nameTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyPressed
+        if(evt.getKeyChar() == 10){
+            saveButtonActionPerformed(null);
+        }
+    }//GEN-LAST:event_nameTextFieldKeyPressed
 
     /**
      * @param args the command line arguments
@@ -205,7 +234,7 @@ public class AddUserDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddUserDialog dialog = new AddUserDialog(new javax.swing.JFrame(), true, "/Users/lucamazza/Desktop/");
+                AddUserDialog dialog = new AddUserDialog(new javax.swing.JFrame(), true, "./Dataset");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

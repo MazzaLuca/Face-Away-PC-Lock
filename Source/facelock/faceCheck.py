@@ -7,6 +7,21 @@ import sys
 import shutil
 import psutil
 from sys import platform
+import ctypes
+from ctypes import CDLL
+import csv
+
+
+
+
+
+system = "";
+if platform == "darwin":
+        system = "macOS"
+elif platform == "win32":
+        system = "Windows"
+else :
+        system = "Linux"
 
 # Metodo che ritorna la lista di utenti che hanno fatto le foto per poi
 # essere riconosciuti. Per sapere quest'informazione l'algoritmo si dirige 
@@ -22,6 +37,26 @@ def getUsers():
             names.append(name)
     return names
 
+# Legge il file settings.csv e ne ricava le impostazioni desiderate dall'utente
+def getSettings(file):
+    data = [
+        "",
+        "",
+        "",
+        ""
+    ]
+    with open(file, newline='') as File:  
+        reader = csv.reader(File)
+        for row in reader:
+            if(row[0] == "Countdown"):
+                data[0] = row[1].strip()
+            elif (row[0] == "Mail"):
+                data[1] = row[1].strip()
+            elif (row[0] == "lockMail"):
+                data[2] = row[1].strip()
+            elif (row[0] == "useMail"):
+                data[3] = row[1].strip()
+    return data
 # In base ai nomi dati come parametro crea gli encodings, fatto questo 
 # ritorna la lista creata
 def getEncodings(usernames):
@@ -101,9 +136,8 @@ def TakePhoto():
     shutil.move('.\\' + (str(files[0]) + '.jpg'), 'Dataset\\' + user + '\\' +  str(files[0]) + '.jpg')
 
 def getFrame():
-
-    if platform == "darwin":
-        video_capture = cv2.VideoCapture(0)
+    if system == "macOS":
+         video_capture = cv2.VideoCapture(0)
     else:
         video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
     ret, frame = video_capture.read()
@@ -111,6 +145,15 @@ def getFrame():
     rgb_small_frame = small_frame[:, :, ::-1]
     cv2.destroyAllWindows()
     return rgb_small_frame
+
+def lockScreen(system):
+    if(system == "Windows"):
+        ctypes.windll.user32.LockWorkStation()
+    elif (system == "macOS" or system == "Linux"):
+        loginPF = CDLL('/System/Library/PrivateFrameworks/login.framework/Versions/Current/login')
+        result = loginPF.SACLockScreenImmediate()
+    else:
+        print("Non so ancora bloccare questo dispositivo")
 
 
 def checkIfProcessRunning(processName):
@@ -122,11 +165,14 @@ def checkIfProcessRunning(processName):
             pass
     return False;
 
+
+
+settings = getSettings("Settings/settings.csv")
 users = getUsers()
 known_face_encodings = getEncodings(users)
 known_face_names = getFinalUsers(users)
-timer = 5
-while True:
+timer = int(settings[0])
+while timer >= 0:
     if checkIfProcessRunning("Camera"):
         print("Camera is active in another process")
     else:
@@ -139,9 +185,12 @@ while True:
                 break
         else:
             print("Hi " + face)
-            timer = 5
+            timer = int(settings[0])
 
     sleep(0.5)
+    
+lockScreen(system)
+
 
 
         

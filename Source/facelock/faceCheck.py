@@ -10,7 +10,9 @@ from sys import platform
 import ctypes
 from ctypes import CDLL
 import csv
-
+import time
+from datetime import datetime
+from os import path
 
 
 
@@ -42,7 +44,6 @@ def getSettings(file):
     data = [
         "",
         "",
-        "",
         ""
     ]
     with open(file, newline='') as File:  
@@ -50,12 +51,10 @@ def getSettings(file):
         for row in reader:
             if(row[0] == "Countdown"):
                 data[0] = row[1].strip()
-            elif (row[0] == "Mail"):
+            elif (row[0] == "logLock"):
                 data[1] = row[1].strip()
-            elif (row[0] == "lockMail"):
+            elif (row[0] == "logStranger"):
                 data[2] = row[1].strip()
-            elif (row[0] == "useMail"):
-                data[3] = row[1].strip()
     return data
 # In base ai nomi dati come parametro crea gli encodings, fatto questo 
 # ritorna la lista creata
@@ -165,6 +164,29 @@ def checkIfProcessRunning(processName):
             pass
     return False;
 
+# Metodo che permette di loggare un azione in base all'utente e all'azione eseguita
+def logAction(action, user):
+    now = datetime.now()
+    file = "Logs/log_" + now.strftime("%Y-%m-%d") + ".csv"
+    fileExists = False
+
+    if(path.exists(file)):
+        fileExists = True
+
+    f = open(file, "a")
+
+    with f:
+        
+        fnames = ['time', 'action', 'lastUser']
+        writer = csv.DictWriter(f, fieldnames=fnames)    
+        if(not fileExists):
+            writer.writeheader()
+        writer.writerow({'time' : now.strftime("%H:%M:%S"), 'action': action, 'lastUser': user})
+
+    f.close()
+
+
+
 
 
 settings = getSettings("Settings/settings.csv")
@@ -172,7 +194,11 @@ users = getUsers()
 known_face_encodings = getEncodings(users)
 known_face_names = getFinalUsers(users)
 timer = int(settings[0])
+lastUser = "nobody"
+
+start = int(round(time.time() * 1000))
 while timer >= 0:
+    now = int(round(time.time() * 1000))
     if checkIfProcessRunning("Camera"):
         print("Camera is active in another process")
     else:
@@ -180,22 +206,17 @@ while timer >= 0:
         if(face == -1):
             print(timer)
             timer = timer - 1
+            if(settings[2] == "1"):
+                logAction("Face not recognized", lastUser)
             if timer == -1:
-                print("Face not recognised for too long")
+                if(settings[1] == "1"):
+                    logAction("Face not recognised for too long --> pc locked", lastUser)
                 break
         else:
+            lastUser = face
             print("Hi " + face)
             timer = int(settings[0])
 
-    sleep(0.5)
-
+    if(now - start < 1000):
+        sleep(float(1000 - (now - start))/ 1000.0)
 lockScreen(system)
-
-
-
-        
-
-
-
-
-

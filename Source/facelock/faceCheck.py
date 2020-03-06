@@ -10,6 +10,7 @@ from sys import platform
 import ctypes
 from ctypes import CDLL
 import csv
+import time
 
 
 
@@ -172,7 +173,10 @@ users = getUsers()
 known_face_encodings = getEncodings(users)
 known_face_names = getFinalUsers(users)
 timer = int(settings[0])
+
+start = int(round(time.time() * 1000))
 while timer >= 0:
+    now = int(round(time.time() * 1000))
     if checkIfProcessRunning("Camera"):
         print("Camera is active in another process")
     else:
@@ -187,8 +191,8 @@ while timer >= 0:
             print("Hi " + face)
             timer = int(settings[0])
 
-    sleep(0.5)
-
+    if(now - start < 1000):
+        sleep(float(1000 - (now - start))/ 1000.0)
 lockScreen(system)
 
 

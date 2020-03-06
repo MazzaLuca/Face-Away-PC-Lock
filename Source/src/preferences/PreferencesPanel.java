@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,6 +25,12 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private String dir = "./Dataset/";
     
     private String version = "0.1 Beta";
+    
+    private int countdown = 5;
+        
+    private boolean logLock = false;
+    
+    private boolean logStranger = false;
     
     /**
      * Creates new form PreferencesPanel
@@ -94,6 +102,28 @@ public class PreferencesPanel extends javax.swing.JPanel {
         }
     }
     
+    public void updateCSV(){
+        try {
+            List<List<String>> rows = Arrays.asList(
+                    Arrays.asList("Countdown", "" + this.countdown),
+                    Arrays.asList("logLock", this.logLock?"1":"0"),
+                    Arrays.asList("logStranger", this.logStranger?"1":"0")
+            );
+            
+            FileWriter csvWriter = new FileWriter("./Settings/settings.csv");
+            
+            for (List<String> rowData : rows) {
+                csvWriter.append(String.join(",", rowData));
+                csvWriter.append("\n");
+            }
+            
+            csvWriter.flush();
+            csvWriter.close();
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex);
+        }
+    }
+    
     public void serialize(File handle) {
         String path = handle.toString();
         try {
@@ -146,7 +176,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
         NotifyTurnOffCheck = new javax.swing.JCheckBox();
         ShortCutCheck = new javax.swing.JCheckBox();
         DarkModeCheck = new javax.swing.JCheckBox();
-        ModifierCombo = new javax.swing.JComboBox<>();
         ShortcutLetter = new javax.swing.JTextField();
         AdvancedPanel = new javax.swing.JPanel();
         AdvancedLabel = new javax.swing.JLabel();
@@ -156,6 +185,8 @@ public class PreferencesPanel extends javax.swing.JPanel {
         FaceLockLabel = new javax.swing.JLabel();
         VersionLabel = new javax.swing.JLabel();
         CopyrightLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        ApplyButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(236, 236, 236));
 
@@ -357,12 +388,15 @@ public class PreferencesPanel extends javax.swing.JPanel {
         TurnOffScreenLabel1.setText("Turn off screen after");
 
         TurnOffMinuteSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 30, 5));
+        TurnOffMinuteSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TurnOffMinuteSpinner.setFocusTraversalKeysEnabled(false);
         TurnOffMinuteSpinner.setFocusable(false);
         TurnOffMinuteSpinner.setOpaque(true);
         TurnOffMinuteSpinner.setRequestFocusEnabled(false);
+        TurnOffMinuteSpinner.setVerifyInputWhenFocusTarget(false);
 
         TurnOffScreenLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        TurnOffScreenLabel2.setText("minutes I am away");
+        TurnOffScreenLabel2.setText("seconds I am away");
 
         NotifyTurnOffCheck.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         NotifyTurnOffCheck.setText("Notify when the computer turns off");
@@ -388,19 +422,17 @@ public class PreferencesPanel extends javax.swing.JPanel {
             }
         });
 
-        ModifierCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "⌘", "⌥", "⇧", "⌃" }));
-        ModifierCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ModifierComboActionPerformed(evt);
-            }
-        });
-
         ShortcutLetter.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ShortcutLetter.setText("L");
         ShortcutLetter.setToolTipText("");
         ShortcutLetter.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         ShortcutLetter.setDragEnabled(false);
         ShortcutLetter.setPreferredSize(new java.awt.Dimension(11, 26));
+        ShortcutLetter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ShortcutLetterKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout GeneralPanelLayout = new javax.swing.GroupLayout(GeneralPanel);
         GeneralPanel.setLayout(GeneralPanelLayout);
@@ -413,12 +445,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
                     .addGroup(GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(GeneralLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                         .addGroup(GeneralPanelLayout.createSequentialGroup()
-                            .addComponent(ShortCutCheck)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
-                            .addComponent(ModifierCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(ShortcutLetter, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(GeneralPanelLayout.createSequentialGroup()
                             .addGroup(GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(GeneralPanelLayout.createSequentialGroup()
                                     .addComponent(TurnOffScreenLabel1)
@@ -428,7 +454,11 @@ public class PreferencesPanel extends javax.swing.JPanel {
                                     .addComponent(TurnOffScreenLabel2))
                                 .addComponent(NotifyTurnOffCheck)
                                 .addComponent(DarkModeCheck))
-                            .addGap(0, 151, Short.MAX_VALUE)))
+                            .addGap(0, 192, Short.MAX_VALUE))
+                        .addGroup(GeneralPanelLayout.createSequentialGroup()
+                            .addComponent(ShortCutCheck)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 328, Short.MAX_VALUE)
+                            .addComponent(ShortcutLetter, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(3, 3, 3)))
         );
         GeneralPanelLayout.setVerticalGroup(
@@ -445,12 +475,10 @@ public class PreferencesPanel extends javax.swing.JPanel {
                         .addComponent(TurnOffScreenLabel2))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(NotifyTurnOffCheck)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGap(8, 8, 8)
                     .addGroup(GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(ShortCutCheck)
-                        .addGroup(GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ModifierCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ShortcutLetter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ShortcutLetter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(11, 11, 11)
                     .addComponent(DarkModeCheck)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -506,6 +534,21 @@ public class PreferencesPanel extends javax.swing.JPanel {
         CopyrightLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CopyrightLabel.setText("Copyright LMBJ");
 
+        jPanel1.setBackground(new java.awt.Color(236, 236, 236));
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT);
+        flowLayout1.setAlignOnBaseline(true);
+        jPanel1.setLayout(flowLayout1);
+
+        ApplyButton.setText("Apply");
+        ApplyButton.setToolTipText("Apply changes");
+        ApplyButton.setEnabled(false);
+        ApplyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ApplyButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ApplyButton);
+
         javax.swing.GroupLayout AboutPanelLayout = new javax.swing.GroupLayout(AboutPanel);
         AboutPanel.setLayout(AboutPanelLayout);
         AboutPanelLayout.setHorizontalGroup(
@@ -518,11 +561,12 @@ public class PreferencesPanel extends javax.swing.JPanel {
                     .addComponent(VersionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CopyrightLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         AboutPanelLayout.setVerticalGroup(
             AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AboutPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(AboutLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(FaceLockLabel)
@@ -530,7 +574,8 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 .addComponent(VersionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CopyrightLabel)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -544,33 +589,29 @@ public class PreferencesPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(FacesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(GeneralPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AdvancedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AboutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void NotifyTurnOffCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotifyTurnOffCheckActionPerformed
-        // TODO add your handling code here:
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_NotifyTurnOffCheckActionPerformed
 
     private void ShortCutCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShortCutCheckActionPerformed
-        // TODO add your handling code here:
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_ShortCutCheckActionPerformed
 
     private void DarkModeCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DarkModeCheckActionPerformed
-        // TODO add your handling code here:
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_DarkModeCheckActionPerformed
-
-    private void ModifierComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifierComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ModifierComboActionPerformed
 
     private void userPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel2MouseClicked
         if(this.users[1].equals("")){
@@ -582,6 +623,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 deSerialize(new File(dir + "Users"));
             }
         }
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel2MouseClicked
 
     private void userPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel3MouseClicked
@@ -594,6 +636,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 deSerialize(new File(dir + "Users"));
             }
         }
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel3MouseClicked
 
     private void userPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel4MouseClicked
@@ -606,6 +649,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 deSerialize(new File(dir + "Users"));
             }
         }
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel4MouseClicked
 
     private void userPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel5MouseClicked
@@ -618,6 +662,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 deSerialize(new File(dir + "Users"));
             } 
         }
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel5MouseClicked
 
     private void deleteLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel1MouseClicked
@@ -636,6 +681,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 
             }
         }
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_deleteLabel1MouseClicked
 
     private void deleteLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel4MouseClicked
@@ -653,6 +699,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 deSerialize(new File(dir + "Users"));
             }
         }
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_deleteLabel4MouseClicked
 
     private void deleteLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel2MouseClicked
@@ -670,6 +717,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 deSerialize(new File(dir + "Users"));
             }
         }
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_deleteLabel2MouseClicked
 
     private void deleteLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel3MouseClicked
@@ -687,7 +735,24 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 deSerialize(new File(dir + "Users"));
             }
         }
+        this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_deleteLabel3MouseClicked
+
+    private void ApplyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApplyButtonActionPerformed
+        this.countdown = (int)this.TurnOffMinuteSpinner.getValue();
+        this.logLock = this.NotifyTurnOffCheck.isSelected();
+        this.logStranger = this.NotifySomeoneSeenCheck.isSelected();
+        updateCSV();
+        this.ApplyButton.setEnabled(false);
+    }//GEN-LAST:event_ApplyButtonActionPerformed
+
+    private void ShortcutLetterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ShortcutLetterKeyPressed
+        int hotkey = 0;
+        System.out.println((hotkey = evt.getKeyCode()));
+        if((hotkey = evt.getKeyCode()) == 157){
+            
+        }
+    }//GEN-LAST:event_ShortcutLetterKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -695,6 +760,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private javax.swing.JPanel AboutPanel;
     private javax.swing.JLabel AdvancedLabel;
     private javax.swing.JPanel AdvancedPanel;
+    private javax.swing.JButton ApplyButton;
     private javax.swing.JLabel CopyrightLabel;
     private javax.swing.JCheckBox DarkModeCheck;
     private javax.swing.JLabel FaceLockLabel;
@@ -702,7 +768,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private javax.swing.JPanel FacesPanel;
     private javax.swing.JLabel GeneralLabel;
     private javax.swing.JPanel GeneralPanel;
-    private javax.swing.JComboBox<String> ModifierCombo;
     private javax.swing.JCheckBox NotifySomeoneSeenCheck;
     private javax.swing.JCheckBox NotifyTurnOffCheck;
     private javax.swing.JCheckBox ShortCutCheck;
@@ -719,6 +784,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private javax.swing.JLabel deleteLabel2;
     private javax.swing.JLabel deleteLabel3;
     private javax.swing.JLabel deleteLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel userPanel2;
     private javax.swing.JPanel userPanel3;
     private javax.swing.JPanel userPanel4;

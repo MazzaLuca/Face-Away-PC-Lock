@@ -25,6 +25,7 @@ public class AddUserDialog extends javax.swing.JDialog {
     private boolean hasRegistered;
 
     private String filename;
+    
 
     /**
      * Creates new form AddUserDialog
@@ -192,16 +193,14 @@ public class AddUserDialog extends javax.swing.JDialog {
                 Logger.getLogger(AddUserDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (os.indexOf("win") >= 0) {
-            System.out.println("Windows");
+                ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "cd " + "c:\\" + " && python " + "image.py");
         } else if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") >= 0) {
             System.out.println("Linux");
         }
     }//GEN-LAST:event_registerFaceButtonActionPerformed
 
     private void nameTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyPressed
-        if(evt.getKeyChar() == 10){
-            saveButtonActionPerformed(null);
-        }
+
     }//GEN-LAST:event_nameTextFieldKeyPressed
 
     /**

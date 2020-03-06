@@ -1,4 +1,3 @@
-"Countdown", 10
-"Mail", empty
-"lockMail", 0
-"useMail", 0
+Countdown,5
+logLock,1
+logStranger,0

@@ -188,7 +188,7 @@ while timer >= 0:
             timer = int(settings[0])
 
     sleep(0.5)
-    
+
 lockScreen(system)
 
 

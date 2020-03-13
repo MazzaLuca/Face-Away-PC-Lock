@@ -25,7 +25,6 @@ public class AddUserDialog extends javax.swing.JDialog {
     private boolean hasRegistered;
 
     private String filename;
-    
 
     /**
      * Creates new form AddUserDialog
@@ -179,21 +178,27 @@ public class AddUserDialog extends javax.swing.JDialog {
                 ProcessBuilder processBuilder = new ProcessBuilder(command);
                 processBuilder.directory(new File("./"));
                 Process process = processBuilder.start();
-                
+
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                
+
                 String line;
-                while((line = reader.readLine()) != null){
+                while ((line = reader.readLine()) != null) {
                     System.out.println(line);
                 }
-                
+
                 int exitCode = process.waitFor();
                 System.err.println("Exited with error code: " + exitCode);
             } catch (IOException | InterruptedException ex) {
                 Logger.getLogger(AddUserDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (os.indexOf("win") >= 0) {
-                ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "cd " + "c:\\" + " && python " + "image.py");
+            String currentDir = System.getProperty("user.dir");
+            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "cd " + currentDir + " && python " + "image.py " + this.nameTextField.getText().trim());
+            try {
+                pb.start();
+            } catch (IOException ex) {
+                Logger.getLogger(AddUserDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") >= 0) {
             System.out.println("Linux");
         }

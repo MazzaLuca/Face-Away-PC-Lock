@@ -444,6 +444,9 @@
             <Property name="requestFocusEnabled" type="boolean" value="false"/>
             <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="TurnOffMinuteSpinnerStateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="TurnOffScreenLabel2">
           <Properties>

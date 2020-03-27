@@ -171,7 +171,6 @@ public class AddUserDialog extends javax.swing.JDialog {
 
     private void registerFaceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerFaceButtonActionPerformed
         String os = System.getProperty("os.name").toLowerCase();
-
         if (os.indexOf("mac") >= 0) {
             try {
                 String[] command = {"/usr/local/bin/python3", "image.py", this.nameTextField.getText().trim()};

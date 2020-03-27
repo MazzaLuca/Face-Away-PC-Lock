@@ -203,6 +203,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
         AdvancedPanel = new javax.swing.JPanel();
         AdvancedLabel = new javax.swing.JLabel();
         NotifySomeoneSeenCheck = new javax.swing.JCheckBox();
+        LaunchAtLoginCheckBox = new javax.swing.JCheckBox();
         AboutPanel = new javax.swing.JPanel();
         AboutLabel = new javax.swing.JLabel();
         FaceLockLabel = new javax.swing.JLabel();
@@ -520,22 +521,37 @@ public class PreferencesPanel extends javax.swing.JPanel {
         NotifySomeoneSeenCheck.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         NotifySomeoneSeenCheck.setText("Notify when someone is seen using your computer");
 
+        LaunchAtLoginCheckBox.setText("Launch at login");
+        LaunchAtLoginCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LaunchAtLoginCheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout AdvancedPanelLayout = new javax.swing.GroupLayout(AdvancedPanel);
         AdvancedPanel.setLayout(AdvancedPanelLayout);
         AdvancedPanelLayout.setHorizontalGroup(
             AdvancedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdvancedPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(AdvancedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE))
-            .addGroup(AdvancedPanelLayout.createSequentialGroup()
-                .addComponent(NotifySomeoneSeenCheck)
-                .addGap(6, 6, 6))
+                .addGroup(AdvancedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AdvancedPanelLayout.createSequentialGroup()
+                        .addComponent(AdvancedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                        .addGap(333, 333, 333))
+                    .addGroup(AdvancedPanelLayout.createSequentialGroup()
+                        .addComponent(LaunchAtLoginCheckBox)
+                        .addGap(6, 355, Short.MAX_VALUE))
+                    .addGroup(AdvancedPanelLayout.createSequentialGroup()
+                        .addComponent(NotifySomeoneSeenCheck)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         AdvancedPanelLayout.setVerticalGroup(
             AdvancedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdvancedPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(AdvancedLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LaunchAtLoginCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(NotifySomeoneSeenCheck)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -786,6 +802,31 @@ public class PreferencesPanel extends javax.swing.JPanel {
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_TurnOffMinuteSpinnerStateChanged
 
+    private void LaunchAtLoginCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LaunchAtLoginCheckBoxActionPerformed
+        String os = System.getProperty("os.name").toLowerCase();
+        if(LaunchAtLoginCheckBox.isSelected()){
+            if (os.indexOf("mac") >= 0) {
+                try {
+                    String[] command = {"./startatlogin.sh"};
+                    ProcessBuilder processBuilder = new ProcessBuilder(command);
+                    Process process = processBuilder.start();
+                } catch (IOException ex) {
+                    
+                }
+            }
+        }else{
+            if (os.indexOf("mac") >= 0) {
+                try {
+                    String[] command = {"./nostartatlogin.sh"};
+                    ProcessBuilder processBuilder = new ProcessBuilder(command);
+                    Process process = processBuilder.start();
+                } catch (IOException ex) {
+                    
+                }
+            }
+        }
+    }//GEN-LAST:event_LaunchAtLoginCheckBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AboutLabel;
@@ -800,6 +841,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private javax.swing.JPanel FacesPanel;
     private javax.swing.JLabel GeneralLabel;
     private javax.swing.JPanel GeneralPanel;
+    private javax.swing.JCheckBox LaunchAtLoginCheckBox;
     private javax.swing.JCheckBox NotifySomeoneSeenCheck;
     private javax.swing.JCheckBox NotifyTurnOffCheck;
     private javax.swing.JCheckBox ShortCutCheck;

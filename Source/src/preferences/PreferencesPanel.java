@@ -9,8 +9,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,11 +29,11 @@ public class PreferencesPanel extends javax.swing.JPanel {
     
     private String version = "0.1 Beta";
     
-    private int countdown = 5;
+    private int countdown;
         
-    private boolean logLock = false;
+    private boolean logLock;
     
-    private boolean logStranger = false;
+    private boolean logStranger;
     
     /**
      * Creates new form PreferencesPanel
@@ -38,6 +41,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
     public PreferencesPanel() {
         initComponents();
         deSerialize(new File("./Dataset/Users"));
+        readCSV();
     }
     
     public void deleteDir(File file) {
@@ -45,7 +49,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
         if (contents != null) {
             for (File f : contents) {
                 if (!Files.isSymbolicLink(f.toPath())) {
-                        deleteDir(f);
+                    deleteDir(f);
                 }
             }
         }
@@ -99,6 +103,25 @@ public class PreferencesPanel extends javax.swing.JPanel {
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.ERROR_MESSAGE,
                     null, null, null);
+        }
+    }
+    
+    public void readCSV(){
+        try {
+            List<String> lines = Files.readAllLines(Paths.get("./Settings/settings.csv"));
+            for (String line : lines) {
+                String val = line.split(",")[1];
+                if(line.split(",")[0].equals("Countdown")){
+                    this.countdown = Integer.parseInt(val);
+                    this.TurnOffMinuteSpinner.setValue(this.countdown);
+                }else if(line.split(",")[0].equals("logLock")){
+                    this.logLock = Integer.parseInt(val)==1?true:false;
+                }else if(line.split(",")[0].equals("logStranger")){
+                    this.logStranger = Integer.parseInt(val)==1?true:false;
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PreferencesPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -394,6 +417,11 @@ public class PreferencesPanel extends javax.swing.JPanel {
         TurnOffMinuteSpinner.setOpaque(true);
         TurnOffMinuteSpinner.setRequestFocusEnabled(false);
         TurnOffMinuteSpinner.setVerifyInputWhenFocusTarget(false);
+        TurnOffMinuteSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                TurnOffMinuteSpinnerStateChanged(evt);
+            }
+        });
 
         TurnOffScreenLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         TurnOffScreenLabel2.setText("seconds I am away");
@@ -753,6 +781,10 @@ public class PreferencesPanel extends javax.swing.JPanel {
             
         }
     }//GEN-LAST:event_ShortcutLetterKeyPressed
+
+    private void TurnOffMinuteSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TurnOffMinuteSpinnerStateChanged
+        this.ApplyButton.setEnabled(true);
+    }//GEN-LAST:event_TurnOffMinuteSpinnerStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

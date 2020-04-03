@@ -1,0 +1,11 @@
+Abstract
+Analisi del dominio
+Pianificazione
+Analisi dei mezzi
+	alcuni PC (Jonas)
+Design dell'architettura
+	mettere directory dove si installa faceCheck.py su mac e linux
+Design procedurale
+Implementazionne
+Test
+Conclusioni

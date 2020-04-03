@@ -1,2 +1,6 @@
 Abstract
 Analisi del dominio
+use case
+Pianificazione
+Analisi dei mezzi
+	alcuni PC

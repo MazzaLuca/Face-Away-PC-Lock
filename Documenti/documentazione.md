@@ -196,17 +196,31 @@ Se si usano altri metodi di pianificazione (es scrum), dovranno apparire
 in questo capitolo.
 
 ### Analisi dei mezzi
+#### Hardware
+|**Nome**|**Proprietario**|**Sistema operativo**|**RAM**|**Storage**|**Scheda grafica**|**CPU**|**Risoluzione**|
+|-----|-----|-----|-----|-----|-----|-----|-----|
+|Acer Aspire 5|Matteo|Windows 10 1909|16GB|128GB SSD 1TB HDD|nvidia 940mx|i7 7500U|1920x1080|
+|MacBook Pro (15-inch, 2017)|Luca|macOS Catalina 10.15.4|16GB|256GB SSD|Radeon Pro 555|i7|2880x1800|
+|Acer Predator Orion 3000|Matteo|Windows 10 1903|16GB|500GB SSD 1TB HDD|nvidia Geforce RTX 2060 super|i7 9700|1920x1080 (monitor esterno)|
+|Asus|Bruno|Windows 10 1909|4GB|128GB|-|i3 7020U|1366x768|
 
-Elencare e *descrivere* i mezzi disponibili per la realizzazione del
-progetto. Ricordarsi di sempre descrivere nel dettaglio le versioni e il
-modello di riferimento.
+#### Software
 
-SDK, librerie, tools utilizzati per la realizzazione del progetto e
-eventuali dipendenze.
-
-Su quale piattaforma dovrà essere eseguito il prodotto? Che hardware
-particolare è coinvolto nel progetto? Che particolarità e limitazioni
-presenta? Che hw sarà disponibile durante lo sviluppo?
+|**Nome**|**Versione**|
+|--|--|
+|Python|3.6.6|
+|cmake|3.16.3|
+|dlib|19.7.0|
+|face-recognition|1.3.0|
+|face-recognition-models|0.3.0|
+|numpy|1.18.2|
+|opencv-python|4.1.0.25|
+|pip|20.0.2|
+|psutil|5.7.0|
+|netbeans|11.1|
+|JRE|12.0.2|
+|JDK|12.0.2|
+|NSIS|3.05|
 
 ## Progettazione
 

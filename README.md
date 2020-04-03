@@ -9,10 +9,9 @@ Jonas Bertossa<br>
 
 ## Documentazione
 [Lista dei diari]('Documenti/Diari/lista.md')<br>
-[Gantts]('Documenti/Gantt/')
-<br>
 [Documentazione]('Documenti/documentazione.md')
+
 ## File Sorgente
 
-[Installer]('Source/Installer/FaceLock.exe')<br>
-[Cartella completa]('Source/Installer/FaceLock.zip')
+<a href="Source/Installer/FaceLock.exe" download="FaceAwayPCLock-Installer.exe">Installer</a><br>
+<a href="Source/Installer/FaceLock.zip" download="FaceAwayPCLock.zip">Cartella completa</a><br>

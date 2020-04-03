@@ -224,41 +224,40 @@ in questo capitolo.
 
 ## Progettazione
 
-Questo capitolo descrive esaustivamente come deve essere realizzato il
-prodotto fin nei suoi dettagli. Una buona progettazione permette
-all’esecutore di evitare fraintendimenti e imprecisioni
-nell’implementazione del prodotto.
-
 ### Design dell’architettura del sistema
 
-Descrive:
-
--   La struttura del programma/sistema lo schema di rete...
-
--   Gli oggetti/moduli/componenti che lo compongono.
-
--   I flussi di informazione in ingresso ed in uscita e le
-    relative elaborazioni. Può utilizzare *diagrammi di flusso dei
-    dati* (DFD).
-
--   Eventuale sitemap
+Lo script principale (quello che è sempre eseguito) si chiama faceCheck.py e si può trovare nella directory 'C:\Program Files (x86)\FaceLock\Source\faceCheck.py' su windows, ***METTI DIRECTORY MAC*** su macOS e ***METTI DIRECTORY LINUX*** su linux. Una volta avviato lo script viene eseguito in background sulla macchina ospite e ogni secondo accende la webcam per controllare se il proprietario è davanti al computer. Dentro allo script sono presenti molte funzioni per fare in modo che il main possa richiamarle più volte avendo in questa maniera un codice estremamente pulito e molto facile da leggere.
 
 ### Design dei dati e database
 
-Descrizione delle strutture di dati utilizzate dal programma in base
-agli attributi e le relazioni degli oggetti in uso.
-
-### Schema E-R, schema logico e descrizione.
-
-Se il diagramma E-R viene modificato, sulla doc dovrà apparire l’ultima
-versione, mentre le vecchie saranno sui diari.
+I dati dei volti sono codificati tramite degli encodings di face-recognition (libreria di python), per leggere i dati del volto o crearne uno nuovo bisogna passare tramite la funzione dedicata della libreria.
 
 ### Design delle interfacce
 
-Descrizione delle interfacce interne ed esterne del sistema e
-dell’interfaccia utente. La progettazione delle interfacce è basata
-sulle informazioni ricavate durante la fase di analisi e realizzata
-tramite mockups.
+#### Interrfaccia grafica (con le impostazioni)
+<img src="FaceLockUI.png" width="400" height="500" style="float: left;"/>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ### Design procedurale
 

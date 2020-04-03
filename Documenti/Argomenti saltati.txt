@@ -4,3 +4,5 @@ use case
 Pianificazione
 Analisi dei mezzi
 	alcuni PC
+Design dell'architettura
+	mettere directory dove si installa faceCheck.py su mac e linux

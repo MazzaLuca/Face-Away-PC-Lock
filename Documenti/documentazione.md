@@ -236,16 +236,26 @@ I dati dei volti sono codificati tramite degli encodings di face-recognition (li
 
 #### Interrfaccia grafica (con le impostazioni)
 <img src="FaceLockUI.png" width="400" height="500" style="float: left;"/>
+L'interfaccia grafica (in questa schermata ideata per macOS ma praticamente invariata per Windows e Linux) è pensata per essere molto minimale ma che comprende tutte le informazioni indispensabili. Come si può notare infatti le prime informazioni che si notano sono i nomi delle facce da riconcere (John Zillo, Pier Telo e Georgre Bo) con a fianco una x per eliminarli. Subito sotto troviamo la categoria General contenente le preferenze dell'utente, più specificatamente:
+ 
+- *Scelta dei secondi dopo il quale bloccare il computer*
+- *Notifica quando il computer viene spento (sul telefono)*
+- *Shortcut per abilitare o disattivare lo script che controlla se qualcuno è davanti al computer*
+- *Dark mode del programma*
+
+Infine è presente un checkbox per scegliere se notificare (sempre sul telefono) se qualcuno che non è il proprietario sta utilizzando il computer.
 <br>
 <br>
 <br>
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
+
+#### Countdown
+
+<img src="Countdown.png" width="350" height="250" style="float: left;" hspace="10"/>
+
+In questa immagine è rappresentata come il countdown una volta che non vedrà uno degli utenti definiti in precedenza, ovviamente dovrà essere completamente funzionante e dovrà essere visualizzato unicamente quando lo script è sicuro che davanti alla webcam non ci sia nessuno.
 <br>
 <br>
 <br>

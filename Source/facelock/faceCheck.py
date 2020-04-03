@@ -56,6 +56,7 @@ def getSettings(file):
             elif (row[0] == "logStranger"):
                 data[2] = row[1].strip()
     return data
+
 # In base ai nomi dati come parametro crea gli encodings, fatto questo 
 # ritorna la lista creata
 def getEncodings(usernames):
@@ -83,6 +84,8 @@ def getFinalUsers(names):
             i += 1
     return finalNames
 
+# Associa un nome ad un frame di una faccia
+# ritornandone il nome associato
 def getFaces(frame,names,encodings):
     face_locations = []
     face_encodings = []

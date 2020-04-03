@@ -8,8 +8,8 @@ Luca Mazza<br>
 Jonas Bertossa<br>
 
 ## Documentazione
-[Lista dei diari]('Documenti/Diari/lista.md')<br>
-[Documentazione]('Documenti/documentazione.md')
+[Lista dei diari](Documenti/Diari/lista.md)<br>
+[Documentazione](Documenti/documentazione.md)
 
 ## File Sorgente
 

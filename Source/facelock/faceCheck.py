@@ -17,7 +17,7 @@ from os import path
 
 
 
-system = "";
+system = ""
 if platform == "darwin":
         system = "macOS"
 elif platform == "win32":
@@ -139,7 +139,7 @@ def getFrame():
          video_capture = cv2.VideoCapture(0)
     else:
         video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-    ret, frame = video_capture.read()
+    frame = video_capture.read()
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
     rgb_small_frame = small_frame[:, :, ::-1]
     cv2.destroyAllWindows()
@@ -162,7 +162,7 @@ def checkIfProcessRunning(processName):
                 return True
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
-    return False;
+    return False
 
 # Metodo che permette di loggare un azione in base all'utente e all'azione eseguita
 def logAction(action, user):
@@ -197,26 +197,37 @@ timer = int(settings[0])
 lastUser = "nobody"
 
 start = int(round(time.time() * 1000))
+cameraError = False
+
 while timer >= 0:
     now = int(round(time.time() * 1000))
     if checkIfProcessRunning("Camera"):
         print("Camera is active in another process")
     else:
-        face = getFaces(getFrame(), known_face_names, known_face_encodings) 
-        if(face == -1):
-            print(timer)
-            timer = timer - 1
-            if(settings[2] == "1"):
-                logAction("Face not recognized", lastUser)
-            if timer == -1:
-                if(settings[1] == "1"):
-                    logAction("Face not recognised for too long --> pc locked", lastUser)
-                break
-        else:
-            lastUser = face
-            print("Hi " + face)
-            timer = int(settings[0])
+        try:
+            face = getFaces(getFrame(), known_face_names, known_face_encodings) 
+        except:
+            print("ERRORE: nessuna webcam collegata")
+            cameraError = True
+            break
+
+        if(not cameraError):
+            if(face == -1):
+                print(timer)
+                timer = timer - 1
+                if(settings[2] == "1"):
+                    logAction("Face not recognized", lastUser)
+                if timer == -1:
+                    if(settings[1] == "1"):
+                        logAction("Face not recognised for too long --> pc locked", lastUser)
+                    break
+            else:
+                lastUser = face
+                print("Hi " + face)
+                timer = int(settings[0])
 
     if(now - start < 1000):
         sleep(float(1000 - (now - start))/ 1000.0)
-lockScreen(system)
+
+if(not cameraError):
+    lockScreen(system)

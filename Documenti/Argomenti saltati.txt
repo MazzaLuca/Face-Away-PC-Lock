@@ -6,3 +6,6 @@ Analisi dei mezzi
 Design dell'architettura
 	mettere directory dove si installa faceCheck.py su mac e linux
 Design procedurale
+Implementazionne
+Test
+Conclusioni

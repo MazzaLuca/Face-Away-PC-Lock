@@ -1,8 +1,8 @@
 Abstract
 Analisi del dominio
-use case
 Pianificazione
 Analisi dei mezzi
-	alcuni PC
+	alcuni PC (Jonas)
 Design dell'architettura
 	mettere directory dove si installa faceCheck.py su mac e linux
+Design procedurale

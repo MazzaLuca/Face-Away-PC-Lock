@@ -177,8 +177,7 @@ vecchie dovranno essere inserite nei diari.
 
 ### Use case
 
-I casi d’uso rappresentano l’interazione tra i vari attori e le
-funzionalità del prodotto.
+![use case](UseCase.jpg)
 
 ### Pianificazione
 
@@ -256,10 +255,6 @@ Infine è presente un checkbox per scegliere se notificare (sempre sul telefono)
 <img src="Countdown.png" width="350" height="250" style="float: left;" hspace="10"/>
 
 In questa immagine è rappresentata come il countdown una volta che non vedrà uno degli utenti definiti in precedenza, ovviamente dovrà essere completamente funzionante e dovrà essere visualizzato unicamente quando lo script è sicuro che davanti alla webcam non ci sia nessuno.
-<br>
-<br>
-<br>
-<br>
 <br>
 <br>
 <br>

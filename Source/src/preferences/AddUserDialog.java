@@ -173,7 +173,7 @@ public class AddUserDialog extends javax.swing.JDialog {
         String os = System.getProperty("os.name").toLowerCase();
         if (os.indexOf("mac") >= 0) {
             try {
-                String[] command = {"/usr/local/bin/python3", "image.py", this.nameTextField.getText().trim()};
+                String[] command = {"/usr/local/bin/python3.6", "image.py", this.nameTextField.getText().trim()};
                 ProcessBuilder processBuilder = new ProcessBuilder(command);
                 processBuilder.directory(new File("./"));
                 Process process = processBuilder.start();
@@ -204,7 +204,7 @@ public class AddUserDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_registerFaceButtonActionPerformed
 
     private void nameTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyPressed
-
+        
     }//GEN-LAST:event_nameTextFieldKeyPressed
 
     /**

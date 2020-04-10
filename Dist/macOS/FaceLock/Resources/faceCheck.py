@@ -17,7 +17,7 @@ from os import path
 
 class faceCheck(object):
 
-    #
+    # Variabile che verifica quale è il sistema operativo utilizzato
     system = ""
     if platform == "darwin":
         system = "macOS"
@@ -26,31 +26,33 @@ class faceCheck(object):
     else: 
         system = "Linux"
 
-    #
+    # Variabile ottiene il nome della faccia che vede attualmente
     face = ""
 
-    #
+    # Dictionary che tiene traccia dei valori prensenti sul file di Settings
     settings = {
         "Countdown": "0",
         "logLock": "0",
         "logStranger": "0"
     }
 
-    #
+    # Array di utenti riconoscibili dal programma
     users = []
 
-    #
+    # Array delle encodings delle facce conosciute
     known_face_encodings = []
 
-    #
+    # Array dei nomi delle facce conosciute
     known_face_names = []
 
-    #
+    # Variabile che imposta il numeor massimo che il timer può arrivare
     maxTimer = 0
 
-    #
+    # Variabile che salva il nome dell'ultimo utente trovato dalla camera
     lastUser = "nobody"
 
+
+    # Metodo costruttore
     def __init__(self):
         print("Loading images...")
 
@@ -66,8 +68,8 @@ class faceCheck(object):
             if os.path.exists(full_path):
                 self.users.append(name)
 
+
     # Legge il file settings.csv e ne ricava le impostazioni desiderate dall'utente
-    #
     def getSettings(self, file):
         with open(file, newline='') as File:  
             reader = csv.reader(File)
@@ -91,6 +93,7 @@ class faceCheck(object):
                 data = face_recognition.load_image_file(directory)
                 self.known_face_encodings.append(face_recognition.face_encodings(data)[0])
 
+
     # Ritorna un array con i nomi degli utenti ripetuti per ogni immagine
     # di esso
     def getFinalUsers(self, names ):
@@ -102,8 +105,10 @@ class faceCheck(object):
                 self.known_face_names.append(name)
                 i += 1
 
-    #
-    #
+
+    # Metodo che prende gli encodings delle facce degli utenti
+    # e utilizza la libreria face_recognition e machine learning
+    # per trovare tutte le facce
     def getFaces(self, frame, names, encodings):
         face_locations = []
         face_encodings = []
@@ -121,8 +126,8 @@ class faceCheck(object):
                 break
         return face_name
 
-    # 
-    #
+
+    # Metodo che prende l'immagine creata dalla fotocamera
     def getFrame(self):
         if self.system == "macOS":
             video_capture = cv2.VideoCapture(0)
@@ -137,8 +142,8 @@ class faceCheck(object):
         cv2.destroyAllWindows()
         return rgb_small_frame
 
-    #
-    #
+
+    # Metodo che blocca lo schermo
     def lockScreen(self, system):
         if(self.system == "Windows"):
             ctypes.windll.user32.LockWorkStation()
@@ -148,8 +153,8 @@ class faceCheck(object):
         else:
             print("Non posso ancora bloccare questo dispositivo")
 
-    # 
-    #
+
+    # Metodo che verifica se existe gia un processo che stia utilizzando la fotocamera
     def checkIfProcessRunning(self, processName):
         for proc in psutil.process_iter():
             try:
@@ -159,8 +164,8 @@ class faceCheck(object):
                 pass
         return False
 
+
     # Metodo che permette di loggare un azione in base all'utente e all'azione eseguita
-    #
     def logAction(self, action, user):
         now = datetime.now()
         file = "Logs/log_" + now.strftime("%Y-%m-%d") + ".csv"
@@ -181,8 +186,9 @@ class faceCheck(object):
 
         f.close()
 
-    #
-    #
+
+    # Metodo che aggiorna i valori nel Dictionary
+    # in base ai valori presenti nel file Settings
     def updateSettings(self):
         while True:
             self.getSettings("Settings/settings.csv")
@@ -192,8 +198,8 @@ class faceCheck(object):
             self.maxTimer = int(self.settings["Countdown"])
             sleep(5)
 
-    #
-    #
+
+    # Metodo che verifica se la faccia che vede nella fotocamera è conosciuta
     def checkFace(self):
         while True:
             if self.checkIfProcessRunning("Camera") and self.system == "Windows":
@@ -205,8 +211,9 @@ class faceCheck(object):
  
             sleep(1)
 
-    #
-    #
+
+    # Metodo che verifica il stato del timer
+    # e blocca il pc se non trova una faccia conosciuta
     def lock(self):
         if self.system == "Windows":
             sleep(5)
@@ -227,8 +234,8 @@ class faceCheck(object):
                 timer = self.maxTimer
             sleep(1)
     
-    #
-    #
+
+    # Metodo richiamato per creare e fare partire le Threads del programma
     def main(self):
         updateSettingsThread = threading.Thread(target=self.updateSettings)
         faceCheckThread = threading.Thread(target=self.checkFace)
@@ -237,6 +244,6 @@ class faceCheck(object):
         faceCheckThread.start()
         lockThread.start()
 
-    
+# Creazione e esecuzione dell'oggetto
 obj = faceCheck()        
 obj.main()

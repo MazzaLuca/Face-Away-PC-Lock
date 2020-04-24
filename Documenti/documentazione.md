@@ -55,7 +55,7 @@
   - <b>Docenti coinvolti</b>: Geo Petrini, Luca Muggiasca
   - <b>Scuola</b>: Scuola Arti e Mestieri (SAM) Trevano, sezione informatica
   - <b>Materia</b>: Modulo 306
-  - <b>Durata progetto</b>: 17.01.2020 - xx.xx.2020
+  - <b>Durata progetto</b>: 17.01.2020 - 08.05.2020
 
 ### Abstract
 
@@ -196,17 +196,17 @@ in questo capitolo.
 
 ### Analisi dei mezzi
 #### Hardware
-|**Nome**|**Proprietario**|**Sistema operativo**|**RAM**|**Storage**|**Scheda grafica**|**CPU**|**Risoluzione**|
+|Nome|Proprietario|Sistema operativo|RAM|Storage|Scheda grafica|CPU|Risoluzione|
 |-----|-----|-----|-----|-----|-----|-----|-----|
 |Acer Aspire 5|Matteo|Windows 10 1909|16GB|128GB SSD 1TB HDD|nvidia 940mx|i7 7500U|1920x1080|
-|MacBook Pro (15-inch, 2017)|Luca|macOS Catalina 10.15.4|16GB|256GB SSD|Radeon Pro 555|i7|2880x1800|
-|Acer Predator Orion 3000|Matteo|Windows 10 1903|16GB|500GB SSD 1TB HDD|nvidia Geforce RTX 2060 super|i7 9700|1920x1080 (monitor esterno)|
+|MacBook Pro (15-inch, 2017)|Luca|macOS Catalina 10.15.4|16GB|256GB SSD|Radeon Pro 555|i7 7700HQ|2880x1800|
+|Acer Predator Orion 3000|Matteo|Windows 10 1903|16GB|500GB SSD 1TB HDD|nVidia Geforce RTX 2060 super|i7 9700|1920x1080 (monitor esterno)|
 |Asus|Bruno|Windows 10 1909|4GB|128GB|-|i3 7020U|1366x768|
 
 #### Software
 
-|**Nome**|**Versione**|
-|--|--|
+|Nome|Versione|
+|---|---|
 |Python|3.6.6|
 |cmake|3.16.3|
 |dlib|19.7.0|
@@ -225,7 +225,7 @@ in questo capitolo.
 
 ### Design dell’architettura del sistema
 
-Lo script principale (quello che è sempre eseguito) si chiama faceCheck.py e si può trovare nella directory 'C:\Program Files (x86)\FaceLock\Source\faceCheck.py' su windows, ***METTI DIRECTORY MAC*** su macOS e ***METTI DIRECTORY LINUX*** su linux. Una volta avviato lo script viene eseguito in background sulla macchina ospite e ogni secondo accende la webcam per controllare se il proprietario è davanti al computer. Dentro allo script sono presenti molte funzioni per fare in modo che il main possa richiamarle più volte avendo in questa maniera un codice estremamente pulito e molto facile da leggere.
+Lo script principale (quello che è sempre eseguito) si chiama faceCheck.py e si può trovare nella directory 'C:\Program Files (x86)\FaceLock\Source\faceCheck.py' su windows, '/Applications/FaceLock/Resources/faceCheck.py' su macOS e ```METTI DIRECTORY LINUX``` su linux. Una volta avviato lo script viene eseguito in background sulla macchina ospite e ogni secondo accende la webcam per controllare se il proprietario è davanti al computer. Dentro allo script sono presenti molte funzioni per fare in modo che il main possa richiamarle più volte avendo in questa maniera un codice estremamente pulito e molto facile da leggere.
 
 ### Design dei dati e database
 

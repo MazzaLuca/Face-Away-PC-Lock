@@ -15,6 +15,7 @@ import threading
 import time
 from datetime import datetime
 from os import path
+import Quartz
 
 class faceCheck(object):
 
@@ -151,6 +152,7 @@ class faceCheck(object):
         elif (system == "macOS" or system == "Linux"):
             loginPF = CDLL('/System/Library/PrivateFrameworks/login.framework/Versions/Current/login')
             result = loginPF.SACLockScreenImmediate()
+            
         else:
             print("Non posso ancora bloccare questo dispositivo")
 
@@ -226,14 +228,14 @@ class faceCheck(object):
                 timer = timer - 1
                 if(self.settings["logStranger"] == "1"):
                     self.logAction("Face not recognized", self.lastUser)
-                if timer == -1:
-                    self.lockScreen(self.system)
-                    if(self.settings["logLock"] == "1"):
-                        self.logAction("Face not recognised for too long --> pc locked", self.lastUser)
+                    if timer == -1:
+                        self.lockScreen(self.system)
+                        if(self.settings["logLock"] == "1"):
+                            self.logAction("Face not recognised for too long --> pc locked", self.lastUser)
+                        timer = self.maxTimer
+                else:
+                    self.lastUser = self.face
                     timer = self.maxTimer
-            else:
-                self.lastUser = self.face
-                timer = self.maxTimer
             sleep(1)
     
 

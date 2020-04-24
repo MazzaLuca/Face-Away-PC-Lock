@@ -33,7 +33,7 @@
               <Component id="FacesPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="GeneralPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="AdvancedPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="AboutPanel" min="-2" max="-2" attributes="0"/>
@@ -370,7 +370,6 @@
                                       <Component id="TurnOffScreenLabel2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="NotifyTurnOffCheck" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="DarkModeCheck" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="192" max="32767" attributes="0"/>
                           </Group>
@@ -387,7 +386,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="171" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="137" max="32767" attributes="0"/>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -405,8 +404,6 @@
                           <Component id="ShortCutCheck" min="-2" max="-2" attributes="0"/>
                           <Component id="ShortcutLetter" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                      <Component id="DarkModeCheck" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -478,17 +475,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ShortCutCheckActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="DarkModeCheck">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="13" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Dark mode"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DarkModeCheckActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JTextField" name="ShortcutLetter">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
@@ -527,7 +513,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="LaunchAtLoginCheckBox" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="6" pref="355" max="32767" attributes="0"/>
+                          <EmptySpace min="6" pref="364" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="NotifySomeoneSeenCheck" min="-2" max="-2" attributes="0"/>
@@ -570,6 +556,9 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="LaunchAtLoginCheckBox">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Helvetica Neue" size="13" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Launch at login"/>
           </Properties>
           <Events>

@@ -1,3 +1,4 @@
-Countdown,5
-logLock,0
+Countdown,10
+logLock,1
 logStranger,0
+startAtLogin,1

@@ -1,4 +1,5 @@
 import face_recognition
+import logging
 import cv2
 import numpy as np
 from time import sleep
@@ -168,23 +169,25 @@ class faceCheck(object):
     # Metodo che permette di loggare un azione in base all'utente e all'azione eseguita
     def logAction(self, action, user):
         now = datetime.now()
-        file = "Logs/log_" + now.strftime("%Y-%m-%d") + ".csv"
-        fileExists = False
-
-        if(path.exists(file)):
-            fileExists = True
-
+        file = "./Logs/log_" + now.strftime("%Y-%m-%d") + ".log"
         f = open(file, "a")
+        logging.getLogger(action)
+        logging.basicConfig(filename=file,level=logging.DEBUG)
+        logging.info(" "+action + " at " + now.strftime("%H:%M:%S")+ ", last user:" + user)
+        # if(path.exists(file)):
+        #     fileExists = True
 
-        with f:
+        # f = open(file, "a")
+
+        # with f:
             
-            fnames = ['time', 'action', 'lastUser']
-            writer = csv.DictWriter(f, fieldnames=fnames)    
-            if(not fileExists):
-                writer.writeheader()
-            writer.writerow({'time' : now.strftime("%H:%M:%S"), 'action': action, 'lastUser': user})
+        #     fnames = ['time', 'action', 'lastUser']
+        #     writer = csv.DictWriter(f, fieldnames=fnames)    
+        #     if(not fileExists):
+        #         writer.writeheader()
+        #     writer.writerow({'time' : now.strftime("%H:%M:%S"), 'action': action, 'lastUser': user})
 
-        f.close()
+        # f.close()
 
 
     # Metodo che aggiorna i valori nel Dictionary
@@ -215,11 +218,9 @@ class faceCheck(object):
     # Metodo che verifica il stato del timer
     # e blocca il pc se non trova una faccia conosciuta
     def lock(self):
-        if self.system == "Windows":
-            sleep(5)
-
+        sleep(5)
         timer = self.maxTimer
-        while timer >= -1:
+        while True:
             if(self.face == -1):
                 print(timer)
                 timer = timer - 1
@@ -229,6 +230,7 @@ class faceCheck(object):
                     self.lockScreen(self.system)
                     if(self.settings["logLock"] == "1"):
                         self.logAction("Face not recognised for too long --> pc locked", self.lastUser)
+                    timer = self.maxTimer
             else:
                 self.lastUser = self.face
                 timer = self.maxTimer

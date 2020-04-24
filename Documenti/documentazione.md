@@ -105,30 +105,7 @@
 
 ### Analisi del dominio
 
-  Questo capitolo dovrebbe descrivere il contesto in cui il prodotto verrà
-  utilizzato, da questa analisi dovrebbero scaturire le risposte a quesiti
-  quali ad esempio:
-
-  -   Background/Situazione iniziale
-
-  -   Quale è e come è organizzato il contesto in cui il prodotto dovrà
-      funzionare?
-
-  -   Come viene risolto attualmente il problema? Esiste già un prodotto
-      simile?
-
-  -   Chi sono gli utenti? Che bisogni hanno? Come e dove lavorano?
-
-  -   Che competenze/conoscenze/cultura posseggono gli utenti in relazione
-      con il problema?
-
-  -   Esistono convenzioni/standard applicati nel dominio?
-
-  -   Che conoscenze teoriche bisogna avere/acquisire per poter operare
-      efficacemente nel dominio?
-
-  -   …
-
+  Il progetto è realizzato in maniera che possa essere utilizzato da qualsiasi utente, dal più esperto a quello che usa il computer solo per navigare online. Partendo con questo intento abbiamo decioso di rendere il tutto User-Friendly e il più comprensibile possibile in modo da non far emergere ambiguità. Cercando online non abbiamo trovato alcun programma che si occupi di questo (o almeno nessuno fatto rigorosamente bene) e, in quelli che abbiamo trovato, richiedevano tutti una conoscenza tecnica abbastanza elevata.
 ### Analisi e specifica dei requisiti
 
 
@@ -177,22 +154,18 @@ vecchie dovranno essere inserite nei diari.
 
 ### Use case
 
-![use case](UseCase.jpg)
+![use case](Img/UseCase.jpg)
 
 ### Pianificazione
 
-Prima di stabilire una pianificazione bisogna avere almeno una vaga idea
-del modello di sviluppo che si intende adottare. In questa sezione
-bisognerà inserire il modello concettuale di sviluppo che si seguirà
-durante il progetto. Gli elementi di riferimento per una buona
-pianificazione derivano da una scomposizione top-down della problematica
-del progetto.
+#### Pianificazione iniziale
+![Gantt Iniziale](Img/GanttIniziale.jpg)
 
-La pianificazione può essere rappresentata mediante un diagramma di
-Gantt.
+### Pianificatione# finale
+![Gantt Finale]()
 
-Se si usano altri metodi di pianificazione (es scrum), dovranno apparire
-in questo capitolo.
+Come si può notare facilmente la durata del progetto è stata estesa, questo allungamento non è stato a causa della difficoltà sottovalutata ma perché abbiamo deciso di aggiungere degli elementi aggiuntivi. Il 5 febbraio infatti avevamo già finito la grande maggioranza dei requisiti ma per rendere il rpgoramma più completo abbiamo aggiunto ancora altri requisiti.
+
 
 ### Analisi dei mezzi
 #### Hardware
@@ -234,7 +207,7 @@ I dati dei volti sono codificati tramite degli encodings di face-recognition (li
 ### Design delle interfacce
 
 #### Interrfaccia grafica (con le impostazioni)
-<img src="FaceLockUI.png" width="400" height="500" style="float: left;"/>
+<img src="Img/FaceLockUI.png" width="400" height="500" style="float: left;"/>
 L'interfaccia grafica (in questa schermata ideata per macOS ma praticamente invariata per Windows e Linux) è pensata per essere molto minimale ma che comprende tutte le informazioni indispensabili. Come si può notare infatti le prime informazioni che si notano sono i nomi delle facce da riconcere (John Zillo, Pier Telo e Georgre Bo) con a fianco una x per eliminarli. Subito sotto troviamo la categoria General contenente le preferenze dell'utente, più specificatamente:
  
 - *Scelta dei secondi dopo il quale bloccare il computer*
@@ -252,7 +225,7 @@ Infine è presente un checkbox per scegliere se notificare (sempre sul telefono)
 
 #### Countdown
 
-<img src="Countdown.png" width="350" height="250" style="float: left;" hspace="10"/>
+<img src="Img/Countdown.png" width="350" height="250" style="float: left;" hspace="10"/>
 
 In questa immagine è rappresentata come il countdown una volta che non vedrà uno degli utenti definiti in precedenza, ovviamente dovrà essere completamente funzionante e dovrà essere visualizzato unicamente quando lo script è sicuro che davanti alla webcam non ci sia nessuno.
 <br>
@@ -266,42 +239,109 @@ In questa immagine è rappresentata come il countdown una volta che non vedrà u
 
 ### Design procedurale
 
-Descrive i concetti dettagliati dell’architettura/sviluppo utilizzando
-ad esempio:
-
--   Diagrammi di flusso e Nassi.
-
--   Tabelle.
-
--   Classi e metodi.
-
--   Tabelle di routing
-
--   Diritti di accesso a condivisioni …
-
-Questi documenti permetteranno di rappresentare i dettagli procedurali
-per la realizzazione del prodotto.
+All'interno del progetto dovranno essere presenti due file con gli script (quello in python e quello in Java), la differenza tra i due sarà che quello in python si occuperà di riconoscere i volti, bloccare lo schermo e gestire il countdown mentre il programma in java si occuperà di gestire le impostazioni. Le impostazioni verranno poi salvate in un file dove il file Java scriverà e quello python leggerà. 
+Come primissima cosa nel file python bisognerà leggere le immagini contenenti i volti degli utenti, poi lo script potrà partire e, se non riconoscerà alcun volto per un tot di tempo definito nelle impostazioni, esso bloccherà lo schermo.
 
 ## Implementazione
 
-In questo capitolo dovrà essere mostrato come è stato realizzato il
-lavoro. Questa parte può differenziarsi dalla progettazione in quanto il
-risultato ottenuto non per forza può essere come era stato progettato.
+La nostra struttura è divisa in 3, più precisamente:
 
-Sulla base di queste informazioni il lavoro svolto dovrà essere
-riproducibile.
+ - <b><i>image.py</b></i>
 
-In questa parte è richiesto l’inserimento di codice sorgente/print
-screen di maschere solamente per quei passaggi particolarmente
-significativi e/o critici.
+    Questa classe (scritta in python) si occupa unicamente di scattare una foto all'utente (con un'interfaccia grafica dedicata). Questo codice è duplicato anche in <i>faceCheck.py</i>, abbiamo optato per questa opzione per non fare troppe richieste alla classe principale e poter gestire al meglio lo scatto della fotocamera.
 
-Inoltre dovranno essere descritte eventuali varianti di soluzione o
-scelte di prodotti con motivazione delle scelte.
+        user = ""
+        files = []
+        isempty = True
 
-Non deve apparire nessuna forma di guida d’uso di librerie o di
-componenti utilizzati. Eventualmente questa va allegata.
+        if len(sys.argv) == 2:
+          user = sys.argv[1]
+          print(user)
+        else:
+          user = "DEFAULT"
 
-Per eventuali dettagli si possono inserire riferimenti ai diari.
+        if (not os.path.isdir("Dataset/" + user + "/")):
+          os.mkdir("Dataset/" + user + "/")
+
+        for file in os.listdir('Dataset/' + user + "/"):
+          files.insert(0, file.strip(".jpg"))
+          isempty = False
+
+        if isempty:
+          files.insert(0, "0")
+        else:
+          files[0] = int(files[0]) + 1
+
+        camera = cv2.VideoCapture(0)
+        while True:
+            return_value,image = camera.read()
+            cv2.imshow('image',image)
+            if cv2.waitKey(1)& 0xFF == ord('s'):
+                cv2.imwrite('' + str(files[0]) + '.jpg',image)
+                break
+        camera.release()
+        cv2.destroyAllWindows()
+
+        if platform == 'win32':
+            shutil.move('.\\' + (str(files[0]) + '.jpg'), 'Dataset\\' + user + '\\' +  str(files[0]) + '.jpg')
+        else:
+            shutil.move('./' + (str(files[0]) + '.jpg'), 'Dataset/' + user + '/' +  str(files[0]) + '.jpg')
+ - <b><i>faceCheck.py</b></i>
+    
+    Questa classe è sicuramente la più complicata e intrinseca del progetto, tutte le operazioni complicate all'interno di essa sono state gestite in funzione, in modo che il codice eseguito potesse essere il più pulito possibile e quindi anche comprensibile e facile.
+
+    #### Riconoscimento della piattaforma
+
+    A causa di qualche problema (siccome del codice funzionava unicamente su una certa piattaforma e non su un'altra) abbiamo implementato all'inizio del codice un metodo per riconoscere facilmente la piattaforma utilizzata. Abbiamo deciso di cambiare la nomenclatura normale (darwin per macOS, win32 per windows e altrimenti linux) con una più semplice per non doverci ricordare ogni volta come si chiama.
+
+        system = ""
+        if platform == "darwin":
+            system = "macOS"
+        elif platform == "win32":
+            system = "Windows"
+        else: 
+            system = "Linux"
+
+    #### Riconoscimento degli utenti dalle cartelle
+
+    Con questo metodo riusciamo a capire quali utenti sono registrati (e quindi compariranno [nell'interfaccia grafica](###Progettazione)), queste cartelle infatti sono all'interno della cartella Dataset (in Source/FaceLock) e le cartelle a loro volta contengono tutte le immagini che gli utenti hanno scattato.
+
+        def getUsers(self):
+        path = './Dataset/'
+        files = os.listdir(path)
+        for name in files:
+            full_path = os.path.join(path, name + "/")
+            if os.path.exists(full_path):
+                self.users.append(name)
+
+    #### Blocco dello schermo
+
+    Grazie all'utilizzo della funzione lockScreen il programma riesce con un solo comando a bloccare lo schermo, qua dentro il codice riconosce automaticamente il sistema operativo utilizzato basandosi sull'array creato all'inizio del codice. In caso che il sistema non venga riconosciuto esso non verrà bloccato e su linea di comando verrà stampato l'errore "Non posso ancora bloccare questo dispositivo".
+
+        def lockScreen(self, system):
+            if(self.system == "Windows"):
+                ctypes.windll.user32.LockWorkStation()
+            elif (system == "macOS" or system == "Linux"):
+                loginPF = CDLL('/System/Library/PrivateFrameworks/login.framework/Versions/Current/login')
+                result = loginPF.SACLockScreenImmediate()
+            else:
+                print("Non posso ancora bloccare questo dispositivo")
+
+    #### Verificare l'utilizzo simultaneo della fotocamera
+
+    Su windows abbiamo avuto un problema riguardante l'utilizzo della fotocamera su più processi, per evitare questo problema abbiamo scritto questo codice che si occupa di controllare se un processo sta venendo eseguito. Ovviamente il processo non dirà che è già eseguito dalla classe FaceCheck perchà la fotocamera viene attivata e disattivata e non lasciata continuamente attiva.
+
+        def checkIfProcessRunning(self, processName):
+            for proc in psutil.process_iter():
+                try:
+                    if processName.lower() in proc.name().lower():
+                        return True
+                except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                    pass
+            return False
+ - ***preferences.jar***
+
+    Prefernces.jar fa parte di un progetto NetBeans (ovviamente in java) che permette di cambiare le impostazioni legate allo script FaceCheck. Tutte queste impostazioni vengono successivamente scritte nel file settings.csv (all'interno della cartella Settings) e verrà poi interpretato da facheCheck per capire come dovrà comportarsi.
 
 ## Test
 

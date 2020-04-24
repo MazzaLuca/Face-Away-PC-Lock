@@ -35,6 +35,8 @@ public class PreferencesPanel extends javax.swing.JPanel {
     
     private boolean logStranger;
     
+    private boolean startAtLogin;
+    
     /**
      * Creates new form PreferencesPanel
      */
@@ -116,8 +118,14 @@ public class PreferencesPanel extends javax.swing.JPanel {
                     this.TurnOffMinuteSpinner.setValue(this.countdown);
                 }else if(line.split(",")[0].equals("logLock")){
                     this.logLock = Integer.parseInt(val)==1?true:false;
+                    this.NotifyTurnOffCheck.setSelected(this.logLock);
                 }else if(line.split(",")[0].equals("logStranger")){
                     this.logStranger = Integer.parseInt(val)==1?true:false;
+                    this.NotifySomeoneSeenCheck.setSelected(this.logStranger);
+                }else if(line.split(",")[0].equals("startAtLogin")){
+                    this.startAtLogin = Integer.parseInt(val)==1?true:false;
+                    this.LaunchAtLoginCheckBox.setSelected(this.startAtLogin);
+
                 }
             }
         } catch (IOException ex) {
@@ -130,7 +138,8 @@ public class PreferencesPanel extends javax.swing.JPanel {
             List<List<String>> rows = Arrays.asList(
                     Arrays.asList("Countdown", "" + this.countdown),
                     Arrays.asList("logLock", this.logLock?"1":"0"),
-                    Arrays.asList("logStranger", this.logStranger?"1":"0")
+                    Arrays.asList("logStranger", this.logStranger?"1":"0"),
+                    Arrays.asList("startAtLogin", this.startAtLogin?"1":"0")
             );
             
             FileWriter csvWriter = new FileWriter("./Settings/settings.csv");
@@ -198,7 +207,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
         TurnOffScreenLabel2 = new javax.swing.JLabel();
         NotifyTurnOffCheck = new javax.swing.JCheckBox();
         ShortCutCheck = new javax.swing.JCheckBox();
-        DarkModeCheck = new javax.swing.JCheckBox();
         ShortcutLetter = new javax.swing.JTextField();
         AdvancedPanel = new javax.swing.JPanel();
         AdvancedLabel = new javax.swing.JLabel();
@@ -443,14 +451,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
             }
         });
 
-        DarkModeCheck.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        DarkModeCheck.setText("Dark mode");
-        DarkModeCheck.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DarkModeCheckActionPerformed(evt);
-            }
-        });
-
         ShortcutLetter.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ShortcutLetter.setText("L");
         ShortcutLetter.setToolTipText("");
@@ -481,8 +481,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                                     .addComponent(TurnOffMinuteSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(TurnOffScreenLabel2))
-                                .addComponent(NotifyTurnOffCheck)
-                                .addComponent(DarkModeCheck))
+                                .addComponent(NotifyTurnOffCheck))
                             .addGap(0, 192, Short.MAX_VALUE))
                         .addGroup(GeneralPanelLayout.createSequentialGroup()
                             .addComponent(ShortCutCheck)
@@ -492,7 +491,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
         );
         GeneralPanelLayout.setVerticalGroup(
             GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 171, Short.MAX_VALUE)
+            .addGap(0, 137, Short.MAX_VALUE)
             .addGroup(GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(GeneralPanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -508,8 +507,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
                     .addGroup(GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(ShortCutCheck)
                         .addComponent(ShortcutLetter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(11, 11, 11)
-                    .addComponent(DarkModeCheck)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -521,6 +518,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
         NotifySomeoneSeenCheck.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         NotifySomeoneSeenCheck.setText("Notify when someone is seen using your computer");
 
+        LaunchAtLoginCheckBox.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         LaunchAtLoginCheckBox.setText("Launch at login");
         LaunchAtLoginCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -540,7 +538,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                         .addGap(333, 333, 333))
                     .addGroup(AdvancedPanelLayout.createSequentialGroup()
                         .addComponent(LaunchAtLoginCheckBox)
-                        .addGap(6, 355, Short.MAX_VALUE))
+                        .addGap(6, 364, Short.MAX_VALUE))
                     .addGroup(AdvancedPanelLayout.createSequentialGroup()
                         .addComponent(NotifySomeoneSeenCheck)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -652,10 +650,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private void ShortCutCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShortCutCheckActionPerformed
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_ShortCutCheckActionPerformed
-
-    private void DarkModeCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DarkModeCheckActionPerformed
-        this.ApplyButton.setEnabled(true);
-    }//GEN-LAST:event_DarkModeCheckActionPerformed
 
     private void userPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel2MouseClicked
         if(this.users[1].equals("")){
@@ -804,12 +798,14 @@ public class PreferencesPanel extends javax.swing.JPanel {
 
     private void LaunchAtLoginCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LaunchAtLoginCheckBoxActionPerformed
         String os = System.getProperty("os.name").toLowerCase();
+        this.ApplyButton.setEnabled(true);
         if(LaunchAtLoginCheckBox.isSelected()){
             if (os.indexOf("mac") >= 0) {
                 try {
                     String[] command = {"./startatlogin.sh"};
                     ProcessBuilder processBuilder = new ProcessBuilder(command);
                     Process process = processBuilder.start();
+                    this.startAtLogin = true;
                 } catch (IOException ex) {
                     
                 }
@@ -820,6 +816,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
                     String[] command = {"./nostartatlogin.sh"};
                     ProcessBuilder processBuilder = new ProcessBuilder(command);
                     Process process = processBuilder.start();
+                    this.startAtLogin = true;
                 } catch (IOException ex) {
                     
                 }
@@ -835,7 +832,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private javax.swing.JPanel AdvancedPanel;
     private javax.swing.JButton ApplyButton;
     private javax.swing.JLabel CopyrightLabel;
-    private javax.swing.JCheckBox DarkModeCheck;
     private javax.swing.JLabel FaceLockLabel;
     private javax.swing.JLabel FacesLabel;
     private javax.swing.JPanel FacesPanel;

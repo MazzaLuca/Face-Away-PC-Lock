@@ -149,10 +149,12 @@ class faceCheck(object):
     def lockScreen(self, system):
         if(self.system == "Windows"):
             ctypes.windll.user32.LockWorkStation()
-        elif (system == "macOS" or system == "Linux"):
+        elif (system == "macOS"):
             loginPF = CDLL('/System/Library/PrivateFrameworks/login.framework/Versions/Current/login')
             result = loginPF.SACLockScreenImmediate()
-            
+        elif (system == "Linux"):
+            cmd = '/bin/bash /etc/facelock/ubuntulock.sh'
+            os.system(cmd)
         else:
             print("Non posso ancora bloccare questo dispositivo")
 

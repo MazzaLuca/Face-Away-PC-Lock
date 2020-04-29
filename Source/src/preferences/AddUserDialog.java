@@ -22,17 +22,12 @@ public class AddUserDialog extends javax.swing.JDialog {
 
     private boolean cancelled = true;
 
-    private boolean hasRegistered;
-
-    private String filename;
-
     /**
      * Creates new form AddUserDialog
      */
     public AddUserDialog(java.awt.Frame parent, boolean modal, String dir) {
         super(parent, modal);
         this.dir = dir;
-        this.filename = "faceCheck.py";
         initComponents();
     }
 

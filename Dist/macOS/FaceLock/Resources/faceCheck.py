@@ -226,16 +226,16 @@ class faceCheck(object):
             if(self.face == -1):
                 print(timer)
                 timer = timer - 1
-                if(self.settings["logStranger"] == "1"):
-                    self.logAction("Face not recognized", self.lastUser)
-                    if timer == -1:
-                        self.lockScreen(self.system)
-                        if(self.settings["logLock"] == "1"):
-                            self.logAction("Face not recognised for too long --> pc locked", self.lastUser)
-                        timer = self.maxTimer
-                else:
-                    self.lastUser = self.face
+                if timer == -1:
+                    if(self.settings["logStranger"] == "1"):
+                        self.logAction("Face not recognized", self.lastUser)
+                    self.lockScreen(self.system)
+                    if(self.settings["logLock"] == "1"):
+                        self.logAction("Face not recognised for too long --> pc locked", self.lastUser)
                     timer = self.maxTimer
+            else:
+                self.lastUser = self.face
+                timer = self.maxTimer
             sleep(1)
     
 

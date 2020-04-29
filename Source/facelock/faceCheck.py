@@ -147,11 +147,12 @@ class faceCheck(object):
     def lockScreen(self, system):
         if(self.system == "Windows"):
             ctypes.windll.user32.LockWorkStation()
-        elif (system == "macOS" or system == "Linux"):
+        elif (system == "macOS"):
             loginPF = CDLL('/System/Library/PrivateFrameworks/login.framework/Versions/Current/login')
             result = loginPF.SACLockScreenImmediate()
-        else:
-            print("Non posso ancora bloccare questo dispositivo")
+        elif (system == "Linux"):
+            cmd = '/bin/bash /etc/facelock/ubuntulock.sh'
+            os.system(cmd)
 
 
     # Metodo che verifica se existe gia un processo che stia utilizzando la fotocamera

@@ -248,25 +248,25 @@ class faceCheck(object):
                 try:
                     self.face = self.getFaces(self.getFrame(), self.known_face_names, self.known_face_encodings)
                 except:
-                    sleep(1)
+                    sleep(10)
 
                 if self.face != -1:
                     print(self.face)
             sleep(1)
 
     def updateFace(self):
-        while True:
-            sleep(20)
-            self.updateDataset(self.lastUser)
+        # while True:
+        #     sleep(20)
+        #     self.updateDataset(self.lastUser)
         while True:
             # sleep until 2AM
             t = datetime.datetime.today()
-            future = datetime.datetime(t.year,t.month,t.day,2,0)
-            if t.hour >= 2:
+            future = datetime.datetime(t.year,t.month,t.day,8,0)
+            if t.hour >= 8:
                 future += datetime.timedelta(days=1)
             time.sleep((future-t).seconds)
             while self.face == -1:
-                sleep(60)
+                sleep(10)
             self.updateDataset(self.lastUser)
 
 

@@ -231,7 +231,7 @@ class faceCheck(object):
     # Metodo che aggiorna i valori nel Dictionary
     # in base ai valori presenti nel file Settings
     def updateSettings(self):
-        while self.stop:
+        while True:
             self.getSettings("Settings/settings.csv")
             self.getUsers()
             self.getEncodings(self.users)
@@ -241,24 +241,23 @@ class faceCheck(object):
 
     # Metodo che verifica se la faccia che vede nella fotocamera è conosciuta
     def checkFace(self):
-        while self.stop:
+        while True:
             if self.checkIfProcessRunning("Camera") and self.system == "Windows":
                 print("Camera is active in another process")
             else:
-                self.face = self.getFaces(self.getFrame(), self.known_face_names, self.known_face_encodings)
+                try:
+                    self.face = self.getFaces(self.getFrame(), self.known_face_names, self.known_face_encodings)
+                except:
+                    sleep(1)
+
                 if self.face != -1:
                     print(self.face)
             sleep(1)
 
     def updateFace(self):
         while True:
-            self.stop = True
-            sleep(15)
+            sleep(20)
             self.updateDataset(self.lastUser)
-
-            self.lockThread.start()
-            self.faceCheckThread.start()
-            self.updateSettingsThread.start()
         while True:
             # sleep until 2AM
             t = datetime.datetime.today()
@@ -276,7 +275,7 @@ class faceCheck(object):
     def lock(self):
         sleep(5)
         timer = self.maxTimer
-        while self.stop:
+        while True:
             if(self.face == -1):
                 print(timer)
                 timer = timer - 1
@@ -302,7 +301,7 @@ class faceCheck(object):
         self.updateSettingsThread.start()
         self.faceCheckThread.start()
         self.lockThread.start()
-        # self.updateFaceThread.start()
+        self.updateFaceThread.start()
 
 # Creazione e esecuzione dell'oggetto
 obj = faceCheck()        

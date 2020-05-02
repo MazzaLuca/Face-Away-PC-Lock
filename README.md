@@ -13,5 +13,4 @@ Jonas Bertossa<br>
 
 ## File Sorgente
 
-<a href="Source/Installer/FaceLock.exe" download="FaceAwayPCLock-Installer.exe">Installer</a><br>
-<a href="Source/Installer/FaceLock.zip" download="FaceAwayPCLock.zip">Cartella completa</a><br>
+<a href="Installers/FaceLock.zip" download="FaceLock.zip">Cartella completa</a><br>

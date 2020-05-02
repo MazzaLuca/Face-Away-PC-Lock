@@ -97,14 +97,14 @@ public class PreferencesPanel extends javax.swing.JPanel {
             }
             validate();
         } catch (IOException | ClassNotFoundException i) {
-            JOptionPane jop = new JOptionPane();
-            jop.showOptionDialog(
-                    null,
-                    "Cannot open file " + handle ,
-                    "Error opening file",
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.ERROR_MESSAGE,
-                    null, null, null);
+//            JOptionPane jop = new JOptionPane();
+//            jop.showOptionDialog(
+//                    null,
+//                    "Cannot open file " + handle ,
+//                    "Error opening file",
+//                    JOptionPane.DEFAULT_OPTION,
+//                    JOptionPane.ERROR_MESSAGE,
+//                    null, null, null);
         }
     }
     

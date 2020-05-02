@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/python3
 # # -*- coding: utf-8 -*-
 import face_recognition
 import logging
@@ -19,7 +19,7 @@ import datetime
 from os import path
 
 class faceCheck(object):
-
+    print(sys.version)
     updateSettingsThread = threading.Thread()
     faceCheckThread = threading.Thread()
     lockThread = threading.Thread()

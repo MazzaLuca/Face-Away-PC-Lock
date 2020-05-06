@@ -31,7 +31,7 @@ camera = cv2.VideoCapture(0)
 while True:
     return_value,image = camera.read()
     cv2.imshow('image',image)
-    if cv2.waitKey(1)& 0xFF == ord('s'):
+    if cv2.waitKey(1)& 0xFF == ord(' '):
         cv2.imwrite('' + str(files[0]) + '.jpg',image)
         break
 camera.release()

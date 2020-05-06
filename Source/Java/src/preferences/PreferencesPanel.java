@@ -177,6 +177,20 @@ public class PreferencesPanel extends javax.swing.JPanel {
         }
         validate();
     }
+    
+    /**
+     * 
+     */
+    public void addUser(int index, String name){
+        AddUserDialog addUser = new AddUserDialog(/*(JFrame)this.getParent()*/null ,true, this.dir);
+        addUser.setUserName(name);
+        addUser.setVisible(true);
+        if(!addUser.isCancelled()){
+            users[index] = addUser.getName().trim();
+            serialize(new File(dir + "Users"));
+            deSerialize(new File(dir + "Users"));
+        }
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -653,52 +667,36 @@ public class PreferencesPanel extends javax.swing.JPanel {
 
     private void userPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel2MouseClicked
         if(this.users[1].equals("")){
-            AddUserDialog addUser = new AddUserDialog(/*(JFrame)this.getParent()*/null ,true, this.dir);
-            addUser.setVisible(true);
-            if(!addUser.isCancelled()){
-                users[1] = addUser.getName().trim();
-                serialize(new File(dir + "Users"));
-                deSerialize(new File(dir + "Users"));
-            }
+            addUser(1, "");
+        }else{
+            addUser(1, users[1]);
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel2MouseClicked
 
     private void userPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel3MouseClicked
-        if(this.users[2].equals("")){
-            AddUserDialog addUser = new AddUserDialog(/*(JFrame)this.getParent()*/null, true, this.dir);
-            addUser.setVisible(true);
-            if(!addUser.isCancelled()){
-                users[2] = addUser.getName().trim();
-                serialize(new File(dir + "Users"));
-                deSerialize(new File(dir + "Users"));
-            }
+        if(this.users[1].equals("")){
+            addUser(1, "");
+        }else{
+            addUser(1, users[1]);
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel3MouseClicked
 
     private void userPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel4MouseClicked
-        if(this.users[3].equals("")){
-            AddUserDialog addUser = new AddUserDialog(/*(JFrame)this.getParent()*/null, true, this.dir);
-            addUser.setVisible(true);
-            if(!addUser.isCancelled()){
-                users[3] = addUser.getName().trim();
-                serialize(new File(dir + "Users"));
-                deSerialize(new File(dir + "Users"));
-            }
+        if(this.users[1].equals("")){
+            addUser(1, "");
+        }else{
+            addUser(1, users[1]);
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel4MouseClicked
 
     private void userPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel5MouseClicked
-        if(this.users[0].equals("")){
-            AddUserDialog addUser = new AddUserDialog(/*(JFrame)this.getParent()*/null, true, this.dir);
-            addUser.setVisible(true);
-            if(!addUser.isCancelled()){
-                users[0] = addUser.getName().trim();
-                serialize(new File(dir + "Users"));
-                deSerialize(new File(dir + "Users"));
-            } 
+        if(this.users[1].equals("")){
+            addUser(1, "");
+        }else{
+            addUser(1, users[1]);
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel5MouseClicked
@@ -802,7 +800,7 @@ public class PreferencesPanel extends javax.swing.JPanel {
         if(LaunchAtLoginCheckBox.isSelected()){
             if (os.indexOf("mac") >= 0) {
                 try {
-                    String[] command = {"./startatlogin.sh"};
+                    String[] command = {"bash", "startatlogin.sh"};
                     ProcessBuilder processBuilder = new ProcessBuilder(command);
                     Process process = processBuilder.start();
                     this.startAtLogin = true;

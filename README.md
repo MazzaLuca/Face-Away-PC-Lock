@@ -9,8 +9,8 @@ Jonas Bertossa<br>
 
 ## Documentazione
 [Lista dei diari](Documenti/Diari/lista.md)<br>
-[Documentazione Temporanea](Documenti/documentazione.md)<br>
-[Documentazione Finale](Documenti/Documentazione.docx)
+[Documentazione Temporanea (MD)](Documenti/Documentazione/documentazione.md)<br>
+[Documentazione Finale (WORD)](Documenti/Documentazione/Documentazione.docx)
 
 ## File Sorgente
 

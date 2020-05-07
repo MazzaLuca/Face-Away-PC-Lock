@@ -85,7 +85,7 @@ bash FaceLock.sh</string>
 				<key>Class Name</key>
 				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>034E4FA5-EE77-4604-ADC1-7F7AC52222F6</string>
+				<string>9C41B43B-7A69-4475-827E-C31974EA75FA</string>
 				<key>Keywords</key>
 				<array>
 					<string>Shell</string>
@@ -95,9 +95,9 @@ bash FaceLock.sh</string>
 					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>29008A28-2C64-4D07-A04D-F368109AE1A5</string>
+				<string>E643F444-5EC0-40F9-A4E6-D0619F888D00</string>
 				<key>UUID</key>
-				<string>CA710165-FE4C-4A9A-9827-4CCB09FF7FA7</string>
+				<string>C9C8F4B8-7C69-4CC1-AC58-26EE7FCA9847</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>
@@ -170,6 +170,8 @@ bash FaceLock.sh</string>
 						<string>4</string>
 					</dict>
 				</dict>
+				<key>conversionLabel</key>
+				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>

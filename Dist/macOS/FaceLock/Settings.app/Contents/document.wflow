@@ -85,7 +85,7 @@ bash settings.sh</string>
 				<key>Class Name</key>
 				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>034E4FA5-EE77-4604-ADC1-7F7AC52222F6</string>
+				<string>0D5A0728-E5AA-432E-8E1C-AE20EC6BC9D9</string>
 				<key>Keywords</key>
 				<array>
 					<string>Shell</string>
@@ -95,9 +95,9 @@ bash settings.sh</string>
 					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>29008A28-2C64-4D07-A04D-F368109AE1A5</string>
+				<string>46675E65-1FEF-4E71-B8A3-001EB7E9523D</string>
 				<key>UUID</key>
-				<string>CA710165-FE4C-4A9A-9827-4CCB09FF7FA7</string>
+				<string>41CEB4D8-DC96-4B6F-9649-FB0D9447BAEC</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>
@@ -170,6 +170,8 @@ bash settings.sh</string>
 						<string>4</string>
 					</dict>
 				</dict>
+				<key>conversionLabel</key>
+				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>

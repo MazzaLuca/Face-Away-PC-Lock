@@ -1,2 +1,2 @@
 #!/bin/bash
-osascript -e 'tell application "System Events" to delete login item "FaceCheck"'
+osascript -e 'tell application "System Events" to delete login item "FaceLock"'

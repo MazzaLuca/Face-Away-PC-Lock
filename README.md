@@ -21,11 +21,11 @@ Luca Muggiasca<br>**
 Progetto con scopo didattico, valutato, con un forte peso nelle nostre note scolastiche. I docenti ci hanno messo a disposizione diversi progetti con l'opzione di scegliere liberamente il progetto che desideravamo sviluppare. Tutti i **4 Autori** hanno deciso di partecipare in questo progetto, risultando nella creazione della *Team*.
 
 ## Struttura GitHub
-**Dist**: Versioni funzionanti dell'applicazione per ogni sistema operativo. Tutte le cartelle hanno la loro gerarchia corretta e quindi hanno tutte le dipendenze per eseguire i file senza errori.
+**Dist**: Versioni funzionanti dell'applicazione per ogni sistema operativo. Tutte le cartelle hanno la loro gerarchia corretta e quindi hanno tutte le dipendenze per eseguire i file senza errori. La cartella di MacOS è dovuta diventare un ".zip" perchè ci creava dei errori assurdi con GitHub.
 
 **Documenti**: Tutte le informazioni riguardanti al progetto. Questa cartella contiene le richieste/requisiti/QdC, i diversi Gantt, le immagini, tutti i diari e il file della documentazione. I diari spiegano dettagliatamente ogni singolo giorno di lavoro, tutti nostri sviluppi, i nostri problemi riscontratti, le nostre risoluzioni e tutte le cose nuove che abbiamo imparatto. La documentazione é molto esaustiva e spiega oggettivamente qualsiasi cosa che sia accaduta in questo nostro progetto.
 
-**Installers**: File che permettono ai utenti di ottenere Face-Away-PC-Lock nel loro computer, indipendentemente dal sistema operativo. Questi file possono essere degli script da eseguire (Linux) o dei semplici file ".rar" da decomprimere (Windows e Mac). Quando il utente finisce l'installazione, avrà una cartella uguale una di quelle trovate su **Dist**.
+**Installers**: File che permettono ai utenti di ottenere Face-Away-PC-Lock nel loro computer, indipendentemente dal sistema operativo. Questi file sono tutti dei semplici file ".zip" da decomprimere. La versione di Linux viene con uno script e instruzioni aggiuntive. Quando il utente finisce l'installazione, avrà una cartella uguale una di quelle trovate su **Dist**.
 
 **Source**: Codice organizzato di tutto il programma, suddiviso in ciò che è stato sviluppatto in Java e in Python. Non si garantisce il funzionamento di classi/programmi dipendenti di altri file, perchè le cartelle non sono organizzate in modo corretto.
 

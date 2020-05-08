@@ -1,0 +1,45 @@
+ISTRUZIONI
+
+per far partire l'installazione dare i permessi di esecuzione ad ubuntu_install.sh ed eseguirlo come root
+
+chmod +x ubuntu_install.sh
+./ubuntu_install.sh
+
+
+Comandi disponibili una volta completata l'installazione
+
+Per aggiungere una faccia al dataset eseguire il seguente comando immettendo come parametro il nome che si vuole dare alla persona da aggiungere
+
+face-add <nome>
+
+dopodiché si aprirà una finestra con una visuale della webcam, quando si è in posizione scattare la foto premendo il pulsante "s"
+
+
+Per vedere le faccie registrate eseguire il seguente comando
+
+face-ls
+
+
+Per rimuovere una faccia dal dataset eseguire il seguente comando immettendo il nome della persona da rimuovere
+
+face-rm <nome>
+
+
+Per avviare manualmente FaceLock eseguire il seguente comando
+
+sudo systemctl start facelock
+
+
+Per stoppare manualmente FaceLock eseguire il seguente comando
+
+sudo systemctl stop facelock
+
+
+Per avviare facelock al login eseguire il seguente comando
+
+sudo systemctl enable facelock
+
+
+Per disabilitare l'avvio di facelock al login eseguire il seguente comando
+
+sudo systemctl disable facelock

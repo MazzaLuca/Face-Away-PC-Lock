@@ -16,3 +16,4 @@
 |<a href="FaceLock_2020-04-29.docx" download="FaceLock_2020-04-29.docx">2020.04.29</a>| Word |
 |<a href="FaceLock_2020-05-01.docx" download="FaceLock_2020-05-01.docx">2020.05.01</a>| Word |
 |<a href="FaceLock_2020-05-06.docx" download="FaceLock_2020-05-06.docx">2020.05.06</a>| Word |
+|<a href="FaceLock_2020-05-08.docx" download="FaceLock_2020-05-08.docx">2020.05.08</a>| Word |

@@ -1,0 +1,10 @@
+#!/bin/bash
+# Jonas Bertossa
+# Script per listare le faccie del dataset
+cnt=$(ls /etc/facelock/Dataset/ | wc | awk '{print $2}')
+if [[ "$cnt" -gt 0 ]] ; then
+	echo "Elenco facce nel dataset:"
+	ls -d /etc/facelock/Dataset/* | sed 's/.*\///g'
+else
+	echo "Il dataset è vuoto"
+fi

@@ -1,0 +1,10 @@
+#!/bin/bash
+# Jonas Bertossa
+# Script per aggiungere una faccia al dataset
+if [ -z "$1" ]
+  then
+    echo "Errore: Nessun nome specificato"
+    echo "Utilizzo: face-add <nome>"
+    exit 1
+fi
+/usr/bin/python3 /etc/facelock/image.py "$1"

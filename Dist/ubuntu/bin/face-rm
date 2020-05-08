@@ -1,0 +1,15 @@
+#!/bin/bash
+# Jonas Bertossa
+# Script per rimuovere una faccia dal dataset
+if [ -z "$1" ]; then
+    echo "Errore: Nessun nome specificato"
+    echo "Utilizzo: face-rm <nome>"
+    exit 1
+fi
+folder="/etc/facelock/Dataset/${1}"
+if ! [ -f "$folder" ] ; then
+	echo "Errore: Il nome $1 non è presente nel dataset"
+    exit 1
+fi
+rm -rf "$folder"
+echo "$1 è stato rimosso dal dataset"

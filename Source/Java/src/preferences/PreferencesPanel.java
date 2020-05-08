@@ -17,28 +17,50 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author lucamazza
+ * Main Panel, GUI for the setting parameters.
+ * 
+ * @author Luca Mazza
+ * @version 8 May 2020
  */
 public class PreferencesPanel extends javax.swing.JPanel {
     
-    //String[] users = new String[4];
+    /**
+     * Array with usernames.
+     */
     String[] users = {"", "", "", ""};
     
+    /**
+     * Users directory path string.
+     */
     private String dir = "./Dataset/";
     
-    private String version = "0.1 Beta";
+    /**
+     * Version label text.
+     */
+    private String version = "1.0";
     
+    /**
+     * Length of the countdown.
+     */
     private int countdown;
-        
+    
+    /**
+     * Toggle for the log of the lock of the pc.
+     */
     private boolean logLock;
     
+    /**
+     * Toggle for the log of the lock of the pc, when a stranger is seen.
+     */
     private boolean logStranger;
     
+    /**
+     * Toggle for the login start of the script.
+     */
     private boolean startAtLogin;
     
     /**
-     * Creates new form PreferencesPanel
+     * Creates new form PreferencesPanel.
      */
     public PreferencesPanel() {
         initComponents();
@@ -46,6 +68,11 @@ public class PreferencesPanel extends javax.swing.JPanel {
         readCSV();
     }
     
+    /**
+     * Deletes a specified directory with the contained files and folders.
+     * 
+     * @param file Filename of the directory to delete.
+     */
     public void deleteDir(File file) {
         File[] contents = file.listFiles();
         if (contents != null) {
@@ -58,6 +85,39 @@ public class PreferencesPanel extends javax.swing.JPanel {
         file.delete();
     }
     
+    /**
+     * Serializes the 
+     * 
+     * @param handle 
+     */
+    public void serialize(File handle) {
+        String path = handle.toString();
+        try {
+            FileOutputStream fileOut = new FileOutputStream(path);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this.users);
+            out.close();
+            fileOut.close();
+            System.out.println(this.users[0]);
+        } catch (IOException i) {
+            JOptionPane jop = new JOptionPane();
+            jop.showOptionDialog(
+                    null,
+                    "Cannot write file " + handle,
+                    "Error opening file",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE,
+                    null, null, null);
+        }
+        validate();
+    }
+
+    
+    /**
+     * Gets the data of the users serialized in the 'users' file.
+     * 
+     * @param handle Serialization file
+     */
     public void deSerialize(File handle) {
         String path = handle.toString();
         try {
@@ -108,6 +168,9 @@ public class PreferencesPanel extends javax.swing.JPanel {
         }
     }
     
+    /**
+     * Reads the file CSV 'settings' to remember past settings.
+     */
     public void readCSV(){
         try {
             List<String> lines = Files.readAllLines(Paths.get("./Settings/settings.csv"));
@@ -122,17 +185,20 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 }else if(line.split(",")[0].equals("logStranger")){
                     this.logStranger = Integer.parseInt(val)==1?true:false;
                     this.NotifySomeoneSeenCheck.setSelected(this.logStranger);
-                }else if(line.split(",")[0].equals("startAtLogin")){
-                    this.startAtLogin = Integer.parseInt(val)==1?true:false;
-                    this.LaunchAtLoginCheckBox.setSelected(this.startAtLogin);
-
+//                }else if(line.split(",")[0].equals("startAtLogin")){
+//                    this.startAtLogin = Integer.parseInt(val)==1?true:false;
+//                    this.LaunchAtLoginCheckBox.setSelected(this.startAtLogin);
+//
                 }
             }
         } catch (IOException ex) {
             Logger.getLogger(PreferencesPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+        
+    /**
+     * Updates the file CSV 'settings' to update settings.
+     */
     public void updateCSV(){
         try {
             List<List<String>> rows = Arrays.asList(
@@ -155,31 +221,9 @@ public class PreferencesPanel extends javax.swing.JPanel {
             System.out.println("Error: " + ex);
         }
     }
-    
-    public void serialize(File handle) {
-        String path = handle.toString();
-        try {
-            FileOutputStream fileOut = new FileOutputStream(path);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(this.users);
-            out.close();
-            fileOut.close();
-            System.out.println(this.users[0]);
-        } catch (IOException i) {
-            JOptionPane jop = new JOptionPane();
-            jop.showOptionDialog(
-                    null,
-                    "Cannot write file " + handle,
-                    "Error opening file",
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.ERROR_MESSAGE,
-                    null, null, null);
-        }
-        validate();
-    }
-    
+     
     /**
-     * 
+     * Adds an user to the array and serializes the new file containing its infos.
      */
     public void addUser(int index, String name){
         AddUserDialog addUser = new AddUserDialog(/*(JFrame)this.getParent()*/null ,true, this.dir);
@@ -220,12 +264,9 @@ public class PreferencesPanel extends javax.swing.JPanel {
         TurnOffMinuteSpinner = new javax.swing.JSpinner();
         TurnOffScreenLabel2 = new javax.swing.JLabel();
         NotifyTurnOffCheck = new javax.swing.JCheckBox();
-        ShortCutCheck = new javax.swing.JCheckBox();
-        ShortcutLetter = new javax.swing.JTextField();
         AdvancedPanel = new javax.swing.JPanel();
         AdvancedLabel = new javax.swing.JLabel();
         NotifySomeoneSeenCheck = new javax.swing.JCheckBox();
-        LaunchAtLoginCheckBox = new javax.swing.JCheckBox();
         AboutPanel = new javax.swing.JPanel();
         AboutLabel = new javax.swing.JLabel();
         FaceLockLabel = new javax.swing.JLabel();
@@ -450,30 +491,10 @@ public class PreferencesPanel extends javax.swing.JPanel {
         TurnOffScreenLabel2.setText("seconds I am away");
 
         NotifyTurnOffCheck.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        NotifyTurnOffCheck.setText("Notify when the computer turns off");
+        NotifyTurnOffCheck.setText("Log when the computer turns off");
         NotifyTurnOffCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NotifyTurnOffCheckActionPerformed(evt);
-            }
-        });
-
-        ShortCutCheck.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        ShortCutCheck.setText("Shortcut");
-        ShortCutCheck.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ShortCutCheckActionPerformed(evt);
-            }
-        });
-
-        ShortcutLetter.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ShortcutLetter.setText("L");
-        ShortcutLetter.setToolTipText("");
-        ShortcutLetter.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        ShortcutLetter.setDragEnabled(false);
-        ShortcutLetter.setPreferredSize(new java.awt.Dimension(11, 26));
-        ShortcutLetter.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                ShortcutLetterKeyPressed(evt);
             }
         });
 
@@ -496,16 +517,12 @@ public class PreferencesPanel extends javax.swing.JPanel {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(TurnOffScreenLabel2))
                                 .addComponent(NotifyTurnOffCheck))
-                            .addGap(0, 192, Short.MAX_VALUE))
-                        .addGroup(GeneralPanelLayout.createSequentialGroup()
-                            .addComponent(ShortCutCheck)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 328, Short.MAX_VALUE)
-                            .addComponent(ShortcutLetter, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(0, 192, Short.MAX_VALUE)))
                     .addGap(3, 3, 3)))
         );
         GeneralPanelLayout.setVerticalGroup(
             GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 137, Short.MAX_VALUE)
+            .addGap(0, 103, Short.MAX_VALUE)
             .addGroup(GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(GeneralPanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -517,10 +534,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
                         .addComponent(TurnOffScreenLabel2))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(NotifyTurnOffCheck)
-                    .addGap(8, 8, 8)
-                    .addGroup(GeneralPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(ShortCutCheck)
-                        .addComponent(ShortcutLetter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -530,13 +543,10 @@ public class PreferencesPanel extends javax.swing.JPanel {
         AdvancedLabel.setText("Advanced");
 
         NotifySomeoneSeenCheck.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        NotifySomeoneSeenCheck.setText("Notify when someone is seen using your computer");
-
-        LaunchAtLoginCheckBox.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        LaunchAtLoginCheckBox.setText("Launch at login");
-        LaunchAtLoginCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        NotifySomeoneSeenCheck.setText("Log when someone is seen using your computer");
+        NotifySomeoneSeenCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LaunchAtLoginCheckBoxActionPerformed(evt);
+                NotifySomeoneSeenCheckActionPerformed(evt);
             }
         });
 
@@ -551,9 +561,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
                         .addComponent(AdvancedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                         .addGap(333, 333, 333))
                     .addGroup(AdvancedPanelLayout.createSequentialGroup()
-                        .addComponent(LaunchAtLoginCheckBox)
-                        .addGap(6, 364, Short.MAX_VALUE))
-                    .addGroup(AdvancedPanelLayout.createSequentialGroup()
                         .addComponent(NotifySomeoneSeenCheck)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -562,8 +569,6 @@ public class PreferencesPanel extends javax.swing.JPanel {
             .addGroup(AdvancedPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(AdvancedLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LaunchAtLoginCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(NotifySomeoneSeenCheck)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -656,15 +661,23 @@ public class PreferencesPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Event thrown when clicked on the Log turn off checkbox. Activates the 
+     * 'apply' button.
+     * 
+     * @param evt ActionEvent event.
+     */
     private void NotifyTurnOffCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotifyTurnOffCheckActionPerformed
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_NotifyTurnOffCheckActionPerformed
-
-    private void ShortCutCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShortCutCheckActionPerformed
-        this.ApplyButton.setEnabled(true);
-    }//GEN-LAST:event_ShortCutCheckActionPerformed
-
+    
+    /**
+     * Event thrown when clicked on the second's user box. Activates the 
+     * 'apply' button and adds/edits an user.
+     * 
+     * @param evt MouseEvent event.
+     */
     private void userPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel2MouseClicked
         if(this.users[1].equals("")){
             addUser(1, "");
@@ -673,34 +686,58 @@ public class PreferencesPanel extends javax.swing.JPanel {
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel2MouseClicked
-
+    
+    /**
+     * Event thrown when clicked on the third's user box. Activates the 
+     * 'apply' button and adds/edits an user.
+     * 
+     * @param evt MouseEvent event.
+     */
     private void userPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel3MouseClicked
-        if(this.users[1].equals("")){
-            addUser(1, "");
+        if(this.users[2].equals("")){
+            addUser(2, "");
         }else{
-            addUser(1, users[1]);
+            addUser(2, users[2]);
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel3MouseClicked
-
+    
+    /**
+     * Event thrown when clicked on the fourth's user box. Activates the 
+     * 'apply' button and adds/edits an user.
+     * 
+     * @param evt MouseEvent event.
+     */
     private void userPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel4MouseClicked
-        if(this.users[1].equals("")){
-            addUser(1, "");
+        if(this.users[3].equals("")){
+            addUser(3, "");
         }else{
-            addUser(1, users[1]);
+            addUser(3, users[3]);
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel4MouseClicked
-
+    
+    /**
+     * Event thrown when clicked on the first's user box. Activates the 
+     * 'apply' button and adds/edits an user.
+     * 
+     * @param evt MouseEvent event.
+     */
     private void userPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userPanel5MouseClicked
-        if(this.users[1].equals("")){
-            addUser(1, "");
+        if(this.users[0].equals("")){
+            addUser(0, "");
         }else{
-            addUser(1, users[1]);
+            addUser(0, users[0]);
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_userPanel5MouseClicked
-
+    
+    /**
+     * Event thrown when clicked on the first's user delete button. Activates the 
+     * 'apply' button and deletes the user.
+     * 
+     * @param evt MouseEvent event.
+     */
     private void deleteLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel1MouseClicked
         if(!this.users[0].equals("")){
             Object[] options = { "Ok", "Cancel" };
@@ -719,7 +756,13 @@ public class PreferencesPanel extends javax.swing.JPanel {
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_deleteLabel1MouseClicked
-
+    
+    /**
+     * Event thrown when clicked on the fourth's user delete button. Activates the 
+     * 'apply' button and deletes the user.
+     * 
+     * @param evt MouseEvent event.
+     */
     private void deleteLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel4MouseClicked
         if(!this.users[3].equals("")){
             Object[] options = { "Ok", "Cancel" };
@@ -737,7 +780,13 @@ public class PreferencesPanel extends javax.swing.JPanel {
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_deleteLabel4MouseClicked
-
+    
+    /**
+     * Event thrown when clicked on the second's user delete button. Activates the 
+     * 'apply' button and deletes the user.
+     * 
+     * @param evt MouseEvent event.
+     */
     private void deleteLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel2MouseClicked
         if(!this.users[1].equals("")){
             Object[] options = { "Ok", "Cancel" };
@@ -755,7 +804,13 @@ public class PreferencesPanel extends javax.swing.JPanel {
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_deleteLabel2MouseClicked
-
+    
+    /**
+     * Event thrown when clicked on the third's user delete button. Activates the 
+     * 'apply' button and deletes the user.
+     * 
+     * @param evt MouseEvent event. 
+     */
     private void deleteLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabel3MouseClicked
         if(!this.users[2].equals("")){
             Object[] options = { "Ok", "Cancel" };
@@ -773,7 +828,13 @@ public class PreferencesPanel extends javax.swing.JPanel {
         }
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_deleteLabel3MouseClicked
-
+    
+    /**
+     * Event thrown when the 'Apply' button is clicked.
+     * It updates the 'Settings' parameters and updates the CSV.
+     * 
+     * @param evt ActionEvent event.
+     */
     private void ApplyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApplyButtonActionPerformed
         this.countdown = (int)this.TurnOffMinuteSpinner.getValue();
         this.logLock = this.NotifyTurnOffCheck.isSelected();
@@ -781,47 +842,54 @@ public class PreferencesPanel extends javax.swing.JPanel {
         updateCSV();
         this.ApplyButton.setEnabled(false);
     }//GEN-LAST:event_ApplyButtonActionPerformed
-
-    private void ShortcutLetterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ShortcutLetterKeyPressed
-        int hotkey = 0;
-        System.out.println((hotkey = evt.getKeyCode()));
-        if((hotkey = evt.getKeyCode()) == 157){
-            
-        }
-    }//GEN-LAST:event_ShortcutLetterKeyPressed
-
+    
+    /**
+     * Event thrown when clicked on the countdown spinner. Activates the 
+     * 'apply' button.
+     * 
+     * @param evt ActionEvent event.
+     */
     private void TurnOffMinuteSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TurnOffMinuteSpinnerStateChanged
         this.ApplyButton.setEnabled(true);
     }//GEN-LAST:event_TurnOffMinuteSpinnerStateChanged
-
-    private void LaunchAtLoginCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LaunchAtLoginCheckBoxActionPerformed
-        String os = System.getProperty("os.name").toLowerCase();
+       
+    /**
+     * Event thrown when clicked on the Log turn off checkbox. Activates the 
+     * 'apply' button.
+     * 
+     * @param evt ActionEvent event.
+     */
+    private void NotifySomeoneSeenCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotifySomeoneSeenCheckActionPerformed
         this.ApplyButton.setEnabled(true);
-        if(LaunchAtLoginCheckBox.isSelected()){
-            if (os.indexOf("mac") >= 0) {
-                try {
-                    String[] command = {"bash", "startatlogin.sh"};
-                    ProcessBuilder processBuilder = new ProcessBuilder(command);
-                    Process process = processBuilder.start();
-                    this.startAtLogin = true;
-                } catch (IOException ex) {
-                    
-                }
-            }
-        }else{
-            if (os.indexOf("mac") >= 0) {
-                try {
-                    String[] command = {"./nostartatlogin.sh"};
-                    ProcessBuilder processBuilder = new ProcessBuilder(command);
-                    Process process = processBuilder.start();
-                    this.startAtLogin = true;
-                } catch (IOException ex) {
-                    
-                }
-            }
-        }
-    }//GEN-LAST:event_LaunchAtLoginCheckBoxActionPerformed
-
+    }//GEN-LAST:event_NotifySomeoneSeenCheckActionPerformed
+    
+// private void LaunchAtLoginCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                      
+//        String os = System.getProperty("os.name").toLowerCase();
+//        this.ApplyButton.setEnabled(true);
+//        if(LaunchAtLoginCheckBox.isSelected()){
+//            if (os.indexOf("mac") >= 0) {
+//                try {
+//                    String[] command = {"bash", "startatlogin.sh"};
+//                    ProcessBuilder processBuilder = new ProcessBuilder(command);
+//                    Process process = processBuilder.start();
+//                    this.startAtLogin = true;
+//                } catch (IOException ex) {
+//                    
+//                }
+//            }
+//        }else{
+//            if (os.indexOf("mac") >= 0) {
+//                try {
+//                    String[] command = {"./nostartatlogin.sh"};
+//                    ProcessBuilder processBuilder = new ProcessBuilder(command);
+//                    Process process = processBuilder.start();
+//                    this.startAtLogin = true;
+//                } catch (IOException ex) {
+//                    
+//                }
+//            }
+//        }
+//    }     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AboutLabel;
@@ -835,11 +903,8 @@ public class PreferencesPanel extends javax.swing.JPanel {
     private javax.swing.JPanel FacesPanel;
     private javax.swing.JLabel GeneralLabel;
     private javax.swing.JPanel GeneralPanel;
-    private javax.swing.JCheckBox LaunchAtLoginCheckBox;
     private javax.swing.JCheckBox NotifySomeoneSeenCheck;
     private javax.swing.JCheckBox NotifyTurnOffCheck;
-    private javax.swing.JCheckBox ShortCutCheck;
-    private javax.swing.JTextField ShortcutLetter;
     private javax.swing.JSpinner TurnOffMinuteSpinner;
     private javax.swing.JLabel TurnOffScreenLabel1;
     private javax.swing.JLabel TurnOffScreenLabel2;

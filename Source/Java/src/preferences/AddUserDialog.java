@@ -11,15 +11,27 @@ import java.util.logging.Logger;
 import javax.swing.border.LineBorder;
 
 /**
- *
- * @author lucamazza
+ * Dialog that can ad/update an user.
+ * Updates/adds a photo, chose the name.
+ * 
+ * @author Luca Mazza
+ * @version 8 May 2020
  */
 public class AddUserDialog extends javax.swing.JDialog {
-
+    
+    /**
+     * Users directory path string.
+     */
     private String dir;
 
+    /**
+     * User name.
+     */
     private String name;
 
+    /**
+     * Toggle for the cancellation of the user creation .
+     */
     private boolean cancelled = true;
 
     /**
@@ -31,15 +43,30 @@ public class AddUserDialog extends javax.swing.JDialog {
         initComponents();
     }
 
+    /**
+     * Setter for the username.
+     * 
+     * @param name Name to set
+     */
     public void setUserName(String name){
         this.name = name;
         this.nameTextField.setText(name);
     }
     
+    /**
+     * Getter for the username.
+     * 
+     * @return Username 
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Getter for the cancelled toggle.
+     * 
+     * @return the status of cancelled.
+     */
     public boolean isCancelled() {
         return this.cancelled;
     }
@@ -58,6 +85,7 @@ public class AddUserDialog extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
         nameTextField = new javax.swing.JTextField();
         registerFaceButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(236, 236, 236));
@@ -93,6 +121,10 @@ public class AddUserDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 10)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel1.setText("When you click 'Register Face' press space to take a photo.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,11 +140,15 @@ public class AddUserDialog extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(registerFaceButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveButton)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,7 +157,9 @@ public class AddUserDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel)
                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerFaceButton)
                     .addComponent(cancelButton)
@@ -132,6 +170,13 @@ public class AddUserDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Thrown when clicked on the save button.
+     * Saves and creates/updates the new parameters for the user.
+     * Checks if everything has been passed as parameter.
+     * 
+     * @param evt ActionEvent event
+     */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         if (!nameTextField.getText().equals("") /*&& this.hasRegistered*/) {
             this.name = nameTextField.getText().strip().trim();
@@ -164,11 +209,23 @@ public class AddUserDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    /**
+     * Thrown event when clicked on the cancel button.
+     * Sets cancelled up and disposes the frame.
+     * 
+     * @param evt ActionEvent event. 
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.cancelled = true;
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    /**
+     * Thrown event when clicked on the Register face button.
+     * Adds a new photo to the dataset.
+     * 
+     * @param evt ActionEvent event.
+     */
     private void registerFaceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerFaceButtonActionPerformed
         String os = System.getProperty("os.name").toLowerCase();
         if (os.indexOf("mac") >= 0) {
@@ -251,6 +308,7 @@ public class AddUserDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton registerFaceButton;

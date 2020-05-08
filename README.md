@@ -30,12 +30,16 @@ Progetto con scopo didattico, valutato, con un forte peso nelle nostre note scol
 **Source**: Codice organizzato di tutto il programma, suddiviso in ciò che è stato sviluppatto in Java e in Python. Non si garantisce il funzionamento di classi/programmi dipendenti di altri file, perchè le cartelle non sono organizzate in modo corretto.
 
 ## Documentazione
-[Lista dei diari](Documenti/Diari/lista.md)<br>
-[Documentazione Temporanea (MD)](Documenti/Documentazione/documentazione.md)<br>
-[Documentazione Finale (WORD)](Documenti/Documentazione/Documentazione.docx)
+|Nome|Tipo|
+|---|---|
+|[Lista dei diari](Documenti/Diari/lista.md)|Markdown|
+|[Documentazione](Documenti/Documentazione.docx)|Word|
 
 ## Download
 
-<a href="/Installers/facelock.zip" download="facelock.zip">Windows</a><br>
-<a href="/Installers/template" download="template">MacOS [PENDING]</a><br>
+<a href="/Installers/facelock.zip" download="facelock_win10.zip">Windows</a><br>
+<a href="/Installers/facelock/facelock_macos.zip" download="facelock_macos.zip">macOS</a><br>
 <a href="/Installers/ubuntu_install.sh" download="ubuntu_install.sh">Linux</a><br>
+
+## Website
+<a href="http://samtinfo.ch/i17mazluc/facelock">FaceLock</a>

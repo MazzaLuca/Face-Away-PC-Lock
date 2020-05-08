@@ -25,7 +25,7 @@ for file in os.listdir('Dataset/' + user + "/"):
 if isempty:
 	files.insert(0, "0")
 else:
-	files[0] = int(files[0]) + 1
+	files.insert(int(files[0]) + 1)
 
 camera = cv2.VideoCapture(0)
 while True:

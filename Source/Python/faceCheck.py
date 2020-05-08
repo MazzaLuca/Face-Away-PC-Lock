@@ -1,4 +1,7 @@
+#!/usr/bin/python3
+# # -*- coding: utf-8 -*-
 import face_recognition
+import logging
 import cv2
 import numpy as np
 from time import sleep
@@ -12,10 +15,17 @@ from ctypes import CDLL
 import csv
 import threading
 import time
-from datetime import datetime
+import datetime
 from os import path
 
 class faceCheck(object):
+    print(sys.version)
+    updateSettingsThread = threading.Thread()
+    faceCheckThread = threading.Thread()
+    lockThread = threading.Thread()
+    updateFaceThread = threading.Thread()
+
+    stop = False
 
     # Variabile che verifica quale è il sistema operativo utilizzato
     system = ""
@@ -56,7 +66,6 @@ class faceCheck(object):
     def __init__(self):
         print("Loading images...")
 
-
     # Metodo che ritorna la lista di utenti che hanno fatto le foto per poi
     # essere riconosciuti. Per sapere quest'informazione l'algoritmo si dirige 
     # in Dataset e conta le directory, ritornando i loro nomi.
@@ -67,7 +76,6 @@ class faceCheck(object):
             full_path = os.path.join(path, name + "/")
             if os.path.exists(full_path):
                 self.users.append(name)
-
 
     # Legge il file settings.csv e ne ricava le impostazioni desiderate dall'utente
     def getSettings(self, file):
@@ -80,7 +88,6 @@ class faceCheck(object):
                     self.settings["logLock"] = row[1].strip()
                 elif (row[0] == "logStranger"):
                     self.settings["logStranger"] = row[1].strip()
-
 
     # In base ai nomi dati come parametro crea gli encodings, fatto questo 
     # ritorna la lista creata
@@ -153,6 +160,8 @@ class faceCheck(object):
         elif (system == "Linux"):
             cmd = '/bin/bash /etc/facelock/ubuntulock.sh'
             os.system(cmd)
+        else:
+            print("Non posso ancora bloccare questo dispositivo")
 
 
     # Metodo che verifica se existe gia un processo che stia utilizzando la fotocamera
@@ -168,25 +177,56 @@ class faceCheck(object):
 
     # Metodo che permette di loggare un azione in base all'utente e all'azione eseguita
     def logAction(self, action, user):
-        now = datetime.now()
-        file = "Logs/log_" + now.strftime("%Y-%m-%d") + ".csv"
-        fileExists = False
-
-        if(path.exists(file)):
-            fileExists = True
-
+        now = datetime.datetime.now()
+        file = "./Logs/log_" + now.strftime("%Y-%m-%d") + ".log"
         f = open(file, "a")
+        logging.getLogger(action)
+        logging.basicConfig(filename=file,level=logging.DEBUG)
+        logging.info(" "+action + " at " + now.strftime("%H:%M:%S")+ ", last user:" + user)
+        # if(path.exists(file)):
+        #     fileExists = True
 
-        with f:
+        # f = open(file, "a")
+
+        # with f:
             
-            fnames = ['time', 'action', 'lastUser']
-            writer = csv.DictWriter(f, fieldnames=fnames)    
-            if(not fileExists):
-                writer.writeheader()
-            writer.writerow({'time' : now.strftime("%H:%M:%S"), 'action': action, 'lastUser': user})
+        #     fnames = ['time', 'action', 'lastUser']
+        #     writer = csv.DictWriter(f, fieldnames=fnames)    
+        #     if(not fileExists):
+        #         writer.writeheader()
+        #     writer.writerow({'time' : now.strftime("%H:%M:%S"), 'action': action, 'lastUser': user})
 
-        f.close()
+        # f.close()
+    
+    def updateDataset(self, user):
+        files = []
+        isempty = True
 
+        if (not os.path.isdir("Dataset/" + user + "/")):
+            print("Nobody found")
+            return
+
+        for file in os.listdir('Dataset/' + user + "/"):
+            files.insert(0, file.strip(".jpg"))
+            isempty = False
+
+        if isempty:
+            files.insert(0, "0")
+        else:
+            files[0] = int(files[0]) + 1
+
+        camera = cv2.VideoCapture(0)
+        return_value,image = camera.read()
+        cv2.imwrite('' + str(files[0]) + '.jpg',image)
+        camera.release()
+
+        if platform == 'win32':
+            shutil.move('.\\' + (str(files[0]) + '.jpg'), 'Dataset\\' + user + '\\' +  str(files[0]) + '.jpg')
+        else:
+            shutil.move('./' + (str(files[0]) + '.jpg'), 'Dataset/' + user + '/' +  str(files[0]) + '.jpg')
+
+        x = datetime.datetime.now()
+        print(x.strftime("%y") + x.strftime("%U") + x.strftime("%w"))
 
     # Metodo che aggiorna i valori nel Dictionary
     # in base ai valori presenti nel file Settings
@@ -199,37 +239,53 @@ class faceCheck(object):
             self.maxTimer = int(self.settings["Countdown"])
             sleep(5)
 
-
     # Metodo che verifica se la faccia che vede nella fotocamera è conosciuta
     def checkFace(self):
         while True:
             if self.checkIfProcessRunning("Camera") and self.system == "Windows":
                 print("Camera is active in another process")
             else:
-                self.face = self.getFaces(self.getFrame(), self.known_face_names, self.known_face_encodings)
+                try:
+                    self.face = self.getFaces(self.getFrame(), self.known_face_names, self.known_face_encodings)
+                except:
+                    sleep(10)
+
                 if self.face != -1:
                     print(self.face)
- 
             sleep(1)
+
+    def updateFace(self):
+        # while True:
+        #     sleep(20)
+        #     self.updateDataset(self.lastUser)
+        while True:
+            # sleep until 2AM
+            t = datetime.datetime.today()
+            future = datetime.datetime(t.year,t.month,t.day,8,0)
+            if t.hour >= 8:
+                future += datetime.timedelta(days=1)
+            time.sleep((future-t).seconds)
+            while self.face == -1:
+                sleep(10)
+            self.updateDataset(self.lastUser)
 
 
     # Metodo che verifica il stato del timer
     # e blocca il pc se non trova una faccia conosciuta
     def lock(self):
-        if self.system == "Windows":
-            sleep(5)
-
+        sleep(5)
         timer = self.maxTimer
-        while timer >= -1:
+        while True:
             if(self.face == -1):
                 print(timer)
                 timer = timer - 1
-                if(self.settings["logStranger"] == "1"):
-                    self.logAction("Face not recognized", self.lastUser)
                 if timer == -1:
+                    if(self.settings["logStranger"] == "1"):
+                        self.logAction("Face not recognized", self.lastUser)
                     self.lockScreen(self.system)
                     if(self.settings["logLock"] == "1"):
                         self.logAction("Face not recognised for too long --> pc locked", self.lastUser)
+                    timer = self.maxTimer
             else:
                 self.lastUser = self.face
                 timer = self.maxTimer
@@ -238,12 +294,14 @@ class faceCheck(object):
 
     # Metodo richiamato per creare e fare partire le Threads del programma
     def main(self):
-        updateSettingsThread = threading.Thread(target=self.updateSettings)
-        faceCheckThread = threading.Thread(target=self.checkFace)
-        lockThread = threading.Thread(target=self.lock)
-        updateSettingsThread.start()
-        faceCheckThread.start()
-        lockThread.start()
+        self.updateSettingsThread = threading.Thread(target=self.updateSettings)
+        self.faceCheckThread = threading.Thread(target=self.checkFace)
+        self.lockThread = threading.Thread(target=self.lock)
+        self.updateFaceThread = threading.Thread(target=self.updateFace)
+        self.updateSettingsThread.start()
+        self.faceCheckThread.start()
+        self.lockThread.start()
+        self.updateFaceThread.start()
 
 # Creazione e esecuzione dell'oggetto
 obj = faceCheck()        

@@ -37,9 +37,9 @@ Progetto con scopo didattico, valutato, con un forte peso nelle nostre note scol
 
 ## Download
 
-<a href="/Installers/facelock.zip" download="facelock_win10.zip">Windows</a><br>
+<a href="/Installers/facelock_windows.zip" download="facelock_windows.zip">Windows</a><br>
 <a href="/Installers/facelock/facelock_macos.zip" download="facelock_macos.zip">macOS</a><br>
-<a href="/Installers/ubuntu_install.sh" download="ubuntu_install.sh">Linux</a><br>
+<a href="/Installers/facelock_ubuntu.zip" download="facelock_ubuntu.zip">Linux</a><br>
 
 ## Website
 <a href="http://samtinfo.ch/i17mazluc/facelock">FaceLock</a>

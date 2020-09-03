@@ -1,0 +1,97 @@
+public String getJson() {
+        StringWriter out = new StringWriter();
+        JSONObject jso = new JSONObject();
+        JSONObject jso_colors = new JSONObject();
+        JSONArray jso_points = new JSONArray();
+
+        //build points node
+        for (int i = 0; i < this.points.size(); i++) {
+            Point2D.Double p = this.points.get(i);
+            ArrayList<Double> l = new ArrayList();
+            l.add(p.x);
+            l.add(p.y);
+            jso_points.add(l);
+        }
+
+        //build colors node
+        //jso_colors.put("dotColor", new JSONArray(   ));
+        ArrayList<Integer> c = new ArrayList();
+        c.add(this.dotColor.getRed());
+        c.add(this.dotColor.getGreen());
+        c.add(this.dotColor.getBlue());
+        jso_colors.put("dotColor", c);
+
+        c.clear();
+        c.add(this.lineColor.getRed());
+        c.add(this.lineColor.getGreen());
+        c.add(this.lineColor.getBlue());
+        jso_colors.put("lineColor", c);
+
+        c.clear();
+        c.add(this.fillColor.getRed());
+        c.add(this.fillColor.getGreen());
+        c.add(this.fillColor.getBlue());
+        jso_colors.put("fillColor", c);
+
+        //build tree
+        jso.put("type", "Poly");
+        jso.put("points", jso_points);
+        jso.put("colors", jso_colors);
+
+        try {
+            jso.writeJSONString(out);
+        } catch (IOException ex) {
+            Logger.getLogger(Poly.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return out.toString();
+    }
+
+    public void loadJson(String js) {
+        Object obj = JSONValue.parse(js);
+        JSONObject jso = (JSONObject) obj;
+        if (jso.get("type").equals("Poly")) {
+
+            JSONArray jso_points = (JSONArray) jso.get("points");
+            if (jso_points != null) {
+                ArrayList<ArrayList<Double>> l = new ArrayList((java.util.List) jso_points);
+                this.clear();
+                for (int i = 0; i < l.size(); i++) {
+                    Point2D.Double p = new Point2D.Double(l.get(i).get(0), l.get(i).get(1));
+                    this.points.add(p);
+                }
+            }
+
+            JSONObject jso_colors = (JSONObject) jso.get("colors");
+            if ((JSONArray) jso_colors.get("dotColor") != null) {
+                ArrayList<Long> c = (JSONArray) jso_colors.get("dotColor");
+                int r = (int) c.get(0).floatValue();
+                int g = (int) c.get(1).floatValue();
+                int b = (int) c.get(2).floatValue();
+                if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255) {
+                    this.dotColor = new Color(r, g, b);
+                }
+            }
+            if ((JSONArray) jso_colors.get("lineColor") != null) {
+                ArrayList<Long> c = (JSONArray) jso_colors.get("lineColor");
+                int r = (int) c.get(0).floatValue();
+                int g = (int) c.get(1).floatValue();
+                int b = (int) c.get(2).floatValue();
+                if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255) {
+                    this.dotColor = new Color(r, g, b);
+                }
+            }
+            if ((JSONArray) jso_colors.get("fillColor") != null) {
+                ArrayList<Long> c = (JSONArray) jso_colors.get("fillColor");
+                int r = (int) c.get(0).floatValue();
+                int g = (int) c.get(1).floatValue();
+                int b = (int) c.get(2).floatValue();
+                if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255) {
+                    this.fillColor = new Color(r, g, b);
+                }
+            }
+        } else {
+            System.out.println("error loading json");
+        }
+
+    }

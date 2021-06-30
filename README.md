@@ -5,7 +5,7 @@
 **Matteo Arena<br>
 Bruno Gomes<br>
 Luca Mazza<br>
-Jonas Bertossa<br>**
+-Jonas Bertossa-<br>**
 
 
 ## Informazioni Varie
